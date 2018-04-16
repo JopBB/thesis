@@ -1,0 +1,20 @@
+{
+  "name": "nuxttest",
+  "version": "1.0.0",
+  "description": "testing nuxt",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap-vue": "^2.0.0-rc.2",
+    "nuxt": "latest",
+    "sweetalert2": "^7.15.1"
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt build",
+    "generate": "DEPLOY_ENV=GH_PAGES nuxt generate"
+  },
+  "author": "JopBB",
+  "license": "MIT"
+}
