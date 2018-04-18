@@ -5,6 +5,7 @@
 	#buttonUnit{
     width:200px;
     height:200px;
+    border-radius: 5px;
   }
 
   .blueBorder{
@@ -18,14 +19,30 @@
 
 
 <template>
-  <div>
-  	<div id="maps">
-  		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1219.27017132169!2d4.946073531792972!3d52.32434288906796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2snl!4v1520784073588" width="600" height="450" frameborder="0" style="border:0"></iframe>
-  	</div>
+  <div class="container">
+  	<div class="card">
+      <div class="card-content">
+        <span class="card-title">Sample Project</span>
+      </div>
+      <div class="card-tabs">
+        <ul class="tabs tabs-fixed-width">
+          <li class="tab"><a href="#test4">Test 1</a></li>
+          <li class="tab"><a class="active" href="#test5">Test 2</a></li>
+          <li class="tab"><a href="#test6">Test 3</a></li>
+        </ul>
+      </div>
+      <div class="card-content grey lighten-4">
+        <div id="test4">Test 1</div>
+        <div id="test5">Test 2</div>
+        <div id="test6">Test 3</div>
+      </div>
+    </div>
 
     <div id="buttonUnit" class="blueBorder" @click="anotherFunctionName()">
 
     </div>
+
+    <div class="card-panel teal lighten-2">test test blah blah</div>
 
   </div>
   
@@ -40,15 +57,16 @@ export default {
   head: {
     title: 'Home page',
     script: [
-       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' },
-       { src: 'https://code.jquery.com/ui/1.12.1/jquery-ui.js'}
+       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js' },
+       { src: 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js'}
 
     ],
     link: [
-       { rel:'stylesheet', href: '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"'}
+       { rel:'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css'}
     ]
   },
   methods:{
+
   	switchCarLocation(){
   		$(".locationPointer").draggable();
   		this.placeCarLocation = !this.placeCarLocation;
@@ -57,10 +75,18 @@ export default {
   		}
   	},
     anotherFunctionName(){
-      console.log('blablabla');
+      if(jQuery){
+        console.log('yeahyeahyeah')
+      }
       $("#buttonUnit").addClass("redBorder");
       $("#buttonUnit").removeClass("blueBorder");
     }
   }
+}
+
+if (process.browser) {
+  window.onNuxtReady((app) => {
+      $('.tabs').tabs();
+  });
 }
 </script>
