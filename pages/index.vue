@@ -16,13 +16,24 @@
     border:6px solid red;
   }
 
-  .image-upload > input {
- /*   visibility:hidden;
+  .image-upload > .submitTheEvidence{
+    visibility:hidden;
     width:0;
-    height:0*/
+    height:0
   }
   .invis{
-    display:none;
+    visibility:hidden;
+  }
+  #iconSubmit{
+    color:black;
+    border: 1px solid black;
+    border-radius:5px;
+  }
+  #iconSubmit:hover{
+    background-color:#AAAAAA;
+  }
+  .blackColor{
+    color:black;
   }
 </style>
 
@@ -51,22 +62,28 @@
 
     </div>
 
-    <div v-for="member of members" class="card-panel purple lighten-2">
-      {{member.name}}
-    
-      <div v-for="task of member.tasks" v-bind:class="{teal : task.done}" class="card-panel red lighten-2">
-        {{task.deadline}} - {{task.label}}
-        <label>
-          <input v-bind:disabled="!task.uploaded" @click="task.switchDone()" type="checkbox" class="filled-in" />
-          <span></span>
-        </label>
-        <div class="image-upload">
-          <input id="file-input" type="file" />
-          <input @click="task.switchUploaded()" type="submit">
+    <ul v-for="member in members" class="collection with-header">
+      <li class="collection-header"><h4>{{member.name}}</h4></li>
+      <li v-for="task in member.tasks" v-bind:class="{teal : task.uploaded}" class="collection-item">
+        <div>{{task.deadline}} - {{task.label}}
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          <div class="image-upload secondary-content">
+            <button @click="task.switchUploaded()" class="btn waves-effect" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+            </button>
+            <i v-bind:class="{invis : !task.uploaded}" class="material-icons blackColor">check</i>
+          </div>
         </div>
-        <i v-bind:class="{invis : !task.uploaded}" class="material-icons">check</i>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
   
 </template>

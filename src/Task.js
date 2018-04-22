@@ -3,7 +3,6 @@ export default class Task{
 		this.deadline = deadline.toString().substring(0, 10);
 		this.label=label;
 		this.uploaded=0;
-		this.done=0;
 		this.reviewed=0;
 	}
 	switchDone(){
@@ -14,6 +13,7 @@ export default class Task{
 	}
 	switchUploaded(){
 		this.uploaded = 1;
+		console.log("taak " + this.label + " uploaded = " + this.uploaded)
 	}
 
 }
