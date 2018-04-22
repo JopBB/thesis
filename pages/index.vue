@@ -94,7 +94,6 @@ export default {
   },
   data(){
     return{
-      tasks: [new Task("5 maart","code tikken"), new Task("6 maart", "paper schrijven")],
       members: members.members
     }
   },
@@ -112,9 +111,6 @@ export default {
 if (process.browser) {
   window.onNuxtReady((app) => {
       $('.tabs').tabs();
-  });
-  $("input[type=file]").on('change',function(){
-    $('#success').removeClass("invis");
   });
 }
 </script>
