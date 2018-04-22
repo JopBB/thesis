@@ -26,7 +26,8 @@ module.exports = {
 
     ],
     link: [
-       { rel:'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css'}
+       { rel:'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css'},
+       { rel:'stylesheet', href:'https://fonts.googleapis.com/icon?family=Material+Icons'}
     ]
   }
 

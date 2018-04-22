@@ -15,6 +15,15 @@
   .redBorder{
     border:6px solid red;
   }
+
+  .image-upload > input {
+ /*   visibility:hidden;
+    width:0;
+    height:0*/
+  }
+  .invis{
+    display:none;
+  }
 </style>
 
 
@@ -42,8 +51,22 @@
 
     </div>
 
-    <div class="card-panel teal lighten-2">test test blah blah</div>
-
+    <div v-for="member of members" class="card-panel purple lighten-2">
+      {{member.name}}
+    
+      <div v-for="task of member.tasks" v-bind:class="{teal : task.done}" class="card-panel red lighten-2">
+        {{task.deadline}} - {{task.label}}
+        <label>
+          <input v-bind:disabled="!task.uploaded" @click="task.switchDone()" type="checkbox" class="filled-in" />
+          <span></span>
+        </label>
+        <div class="image-upload">
+          <input id="file-input" type="file" />
+          <input @click="task.switchUploaded()" type="submit">
+        </div>
+        <i v-bind:class="{invis : !task.uploaded}" class="material-icons">check</i>
+      </div>
+    </div>
   </div>
   
 </template>
@@ -53,6 +76,9 @@
 
 <script>
 import swal from 'sweetalert2';
+import Task from '~/src/Task.js';
+import Person from '~/src/Person.js';
+import members from '~/src/members.js';
 export default {
   head: {
     title: 'Home page',
@@ -62,21 +88,20 @@ export default {
 
     ],
     link: [
-       { rel:'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css'}
+       { rel:'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css'},
+       { rel:'stylesheet', href:'https://fonts.googleapis.com/icon?family=Material+Icons'}
     ]
   },
+  data(){
+    return{
+      tasks: [new Task("5 maart","code tikken"), new Task("6 maart", "paper schrijven")],
+      members: members.members
+    }
+  },
   methods:{
-
-  	switchCarLocation(){
-  		$(".locationPointer").draggable();
-  		this.placeCarLocation = !this.placeCarLocation;
-  		if(this.placeDangerLocation){
-  			this.placeDangerLocation = false;
-  		}
-  	},
     anotherFunctionName(){
       if(jQuery){
-        console.log('yeahyeahyeah')
+        console.log(members[0])
       }
       $("#buttonUnit").addClass("redBorder");
       $("#buttonUnit").removeClass("blueBorder");
@@ -87,6 +112,9 @@ export default {
 if (process.browser) {
   window.onNuxtReady((app) => {
       $('.tabs').tabs();
+  });
+  $("input[type=file]").on('change',function(){
+    $('#success').removeClass("invis");
   });
 }
 </script>

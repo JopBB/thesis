@@ -13,7 +13,7 @@ let layouts = {
 let resolvedLayouts = {}
 
 export default {
-  head: {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1, user-scalable=no"}],"script":[{"src":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fjquery\u002F1.12.4\u002Fjquery.js"},{"src":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fmaterialize\u002F1.0.0-beta\u002Fjs\u002Fmaterialize.min.js"}],"link":[{"rel":"stylesheet","href":"\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fmaterialize\u002F1.0.0-beta\u002Fcss\u002Fmaterialize.min.css"}],"style":[]},
+  head: {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1, user-scalable=no"}],"script":[{"src":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fjquery\u002F1.12.4\u002Fjquery.js"},{"src":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fmaterialize\u002F1.0.0-beta\u002Fjs\u002Fmaterialize.min.js"}],"link":[{"rel":"stylesheet","href":"\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fmaterialize\u002F1.0.0-beta\u002Fcss\u002Fmaterialize.min.css"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Ficon?family=Material+Icons"}],"style":[]},
   render(h, props) {
     const loadingEl = h('nuxt-loading', { ref: 'loading' })
     const layoutEl = h(this.layout || 'nuxt')
