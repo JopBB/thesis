@@ -92,10 +92,4 @@ export default {
     }
   }
 }
-
-if (process.browser) {
-  window.onNuxtReady((app) => {
-      $('.tabs').tabs();
-  });
-}
 </script>

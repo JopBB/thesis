@@ -14,7 +14,7 @@
 <template>
   <div>
     <ul id="dropdown1" class="dropdown-content">
-      <li v-for="member in members"><a :href="'tasks/' + member.name">{{member.name}}</a></li>
+      <li v-for="member in members"><nuxt-link :to="{path: member.name}">{{member.name}}</nuxt-link></li>
     </ul>
     <nav class="nav-extended">
       <div class="nav-content">
@@ -25,7 +25,7 @@
           <li><a href="#!">Timeline</a></li>
           <li><a href="#!">Information</a></li>
           <!-- Dropdown Trigger -->
-          <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Tasks<i class="material-icons right">arrow_drop_down</i></a></li>
+          <li><a ref="dropdown" class="dropdown-trigger" href="#!" data-target="dropdown1">Tasks<i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
       </div>
     </nav>
@@ -39,12 +39,10 @@
       return{
         members: members.members
       }
-    }
+    },
+    mounted(){
+      $(this.$refs.dropdown).dropdown();
+    }, 
   }
-  if (process.browser) {
-  window.onNuxtReady((app) => {
-      $(".dropdown-trigger").dropdown();
-  });
-}
 </script>
 
