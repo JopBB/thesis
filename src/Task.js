@@ -6,6 +6,8 @@ export default class Task{
 		this.uploaded=uploaded;
 		this.reviewed=0;
 		this.done=0;
+		this.canBeReviewed=0;
+		this.canBeUploaded=0;
 	}
 	switchDone(){
 		this.done = !this.done;
@@ -16,6 +18,12 @@ export default class Task{
 	}
 	switchUploaded(){
 		this.uploaded = 1;
+	}
+	switchCanBeReviewed(){
+		this.canBeReviewed=1;
+	}
+	switchCanBeUploaded(){
+		this.canBeUploaded =1;
 	}
 
 }

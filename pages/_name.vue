@@ -19,37 +19,53 @@
   .blackColor{
     color:black;
   }
+  .taskCheck{
+  	margin:0 10px;
+  }
 </style>
 <template>
-	<div class="container">
+	<div>
 		<navbar></navbar>
-		<ul v-for="" class="collection with-header">
-	      <li class="collection-header"><h4>{{params.name}}</h4></li>
-	      <li v-for="task in memberTasks" v-bind:class="[{ teal: task.uploaded && task.reviewed }, { yellow: task.uploaded && !task.reviewed}]" class="collection-item red lighten 2">
-	        <div>{{task.deadline}} - {{task.label}}
-        		<div v-if="task.isMine">
-		          <div class="file-field input-field">
-		            <div class="btn">
-		              <span>File</span>
-		              <input type="file">
-		            </div>
-		            <div class="file-path-wrapper">
-		              <input class="file-path validate" type="text">
-		            </div>
-		          </div>
-		          <button style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
-		            <i class="material-icons right">send</i>
-		          </button>
-		          <div class="image-upload secondary-content">
-		            <i v-bind:class="{invis : !task.uploaded}" class="material-icons blackColor">check</i>
-		          </div>
-		      	</div>
-		      	<div v-if="!task.isMine && task.uploaded" class="secondary-content">
-		      		<a href="sample-1.jpg" download><i @click="task.switchReviewed()" class="material-icons blackIcon">file_download</i></a>
-		      	</div>
-	        </div>
-	      </li>
-	    </ul>
+		<div class="container">
+			<ul v-for="" class="collection with-header">
+		      <li class="collection-header"><h4>{{params.name}}</h4></li>
+		      <li v-for="task in memberTasks" v-bind:class="[{ teal: task.uploaded && task.reviewed }, { yellow: task.uploaded && !task.reviewed}]" class="collection-item red lighten 2">
+		        {{task.deadline}} - {{task.label}}
+		        <div class="secondary-content taskCheck">
+		        	<label>
+	       				<input v-bind:checked="task.uploaded" type="checkbox" class="filled-in" disabled="disabled" />
+	   					<span>Uploaded</span>
+	      			</label>
+		        </div>
+		        <div class="secondary-content taskCheck">
+		        	<label>
+	       				<input v-model="task.reviewed" v-bind:disabled="!task.canBeReviewed" type="checkbox" class="filled-in" />
+	   					<span v-if="!task.canBeReviewed && !task.isMine" ref="reviewedBox" data-position="top" data-tooltip="Download the document first before checking the reviewed-box!" >Reviewed</span>
+	   					<span v-if="!task.canBeReviewed && task.isMine" ref="reviewedBox" data-position="top" data-tooltip="You cannot review your own tasks" >Reviewed</span>
+	   					<span v-if="task.canBeReviewed" >Reviewed</span>
+	      			</label>
+		        </div>
+	        		<div v-if="task.isMine">
+			          <div @click="task.switchCanBeUploaded()" class="file-field input-field">
+			            <div class="btn">
+			              <span>File</span>
+			              <input type="file">
+			            </div>
+			            <div class="file-path-wrapper">
+			              <input class="file-path validate" type="text">
+			            </div>
+			          </div>
+			          <button v-bind:disabled="!task.canBeUploaded" style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
+			            <i class="material-icons right">send</i>
+			          </button>
+			      	</div>
+			      	<div v-if="!task.isMine && task.uploaded" class="secondary-content">
+			      		<a href="sample-1.jpg" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
+			      	</div>
+		        
+		      </li>
+		    </ul>
+		</div>
 	</div>
 </template>
 
@@ -78,6 +94,10 @@
 				members:members.members
 			}
 		},
+		mounted(){
+			console.log($(this.$refs.reviewedBox))
+	      $(this.$refs.reviewedBox).tooltip();
+	    }, 
 		computed:{
 			memberTasks: function(){
 				var membersList = members.members;
