@@ -1,20 +1,4 @@
 <style>
-	body{
-	}
-
-	#buttonUnit{
-    width:200px;
-    height:200px;
-    border-radius: 5px;
-  }
-
-  .blueBorder{
-    border: 5px solid green;
-  }
-
-  .redBorder{
-    border:6px solid red;
-  }
 
   .image-upload > .submitTheEvidence{
     visibility:hidden;
@@ -40,27 +24,7 @@
 
 <template>
   <div class="container">
-  	<div class="card">
-      <div class="card-content">
-        <span class="card-title">Sample Project</span>
-      </div>
-      <div class="card-tabs">
-        <ul class="tabs tabs-fixed-width">
-          <li class="tab"><a href="#test4">Test 1</a></li>
-          <li class="tab"><a class="active" href="#test5">Test 2</a></li>
-          <li class="tab"><a href="#test6">Test 3</a></li>
-        </ul>
-      </div>
-      <div class="card-content grey lighten-4">
-        <div id="test4">Test 1</div>
-        <div id="test5">Test 2</div>
-        <div id="test6">Test 3</div>
-      </div>
-    </div>
-
-    <div id="buttonUnit" class="blueBorder" @click="anotherFunctionName()">
-
-    </div>
+  	<navbar></navbar>
 
     <ul v-for="member in members" class="collection with-header">
       <li class="collection-header"><h4>{{member.name}}</h4></li>
@@ -75,10 +39,10 @@
               <input class="file-path validate" type="text">
             </div>
           </div>
+          <button style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
           <div class="image-upload secondary-content">
-            <button @click="task.switchUploaded()" class="btn waves-effect" type="submit" name="action">Submit
-              <i class="material-icons right">send</i>
-            </button>
             <i v-bind:class="{invis : !task.uploaded}" class="material-icons blackColor">check</i>
           </div>
         </div>
@@ -96,7 +60,11 @@ import swal from 'sweetalert2';
 import Task from '~/src/Task.js';
 import Person from '~/src/Person.js';
 import members from '~/src/members.js';
+import navbar from '~/src/navbar.vue';
 export default {
+  components:{
+    navbar
+  },
   head: {
     title: 'Home page',
     script: [
