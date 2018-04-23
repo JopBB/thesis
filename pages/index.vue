@@ -57,8 +57,6 @@
 
 <script>
 import swal from 'sweetalert2';
-import Task from '~/src/Task.js';
-import Person from '~/src/Person.js';
 import members from '~/src/members.js';
 import navbar from '~/src/navbar.vue';
 export default {

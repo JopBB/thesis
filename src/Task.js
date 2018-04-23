@@ -1,19 +1,21 @@
 export default class Task{
-	constructor(deadline, label){
+	constructor(deadline, label, isMine, uploaded){
 		this.deadline = deadline.toString().substring(0, 10);
 		this.label=label;
-		this.uploaded=0;
+		this.isMine=isMine;
+		this.uploaded=uploaded;
 		this.reviewed=0;
+		this.done=0;
 	}
 	switchDone(){
 		this.done = !this.done;
 	}
 	switchReviewed(){
 		this.reviewed = !this.reviewed;
+		console.log(this.label + " is now reviewed = " + this.reviewed)
 	}
 	switchUploaded(){
 		this.uploaded = 1;
-		console.log("taak " + this.label + " uploaded = " + this.uploaded)
 	}
 
 }

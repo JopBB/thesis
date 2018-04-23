@@ -1,9 +1,55 @@
+<style>
+
+  .image-upload > .submitTheEvidence{
+    visibility:hidden;
+    width:0;
+    height:0
+  }
+  .invis{
+    visibility:hidden;
+  }
+  .blackIcon{
+    color:black;
+    border: 1px solid black;
+    border-radius:5px;
+  }
+  .blackIcon:hover{
+    background-color:#AAAAAA;
+  }
+  .blackColor{
+    color:black;
+  }
+</style>
 <template>
 	<div class="container">
 		<navbar></navbar>
-
-		Hello {{params.name}}
-		<div v-for="task in memberTasks">{{task.label}}</div>
+		<ul v-for="" class="collection with-header">
+	      <li class="collection-header"><h4>{{params.name}}</h4></li>
+	      <li v-for="task in memberTasks" v-bind:class="[{ teal: task.uploaded && task.reviewed }, { yellow: task.uploaded && !task.reviewed}]" class="collection-item red lighten 2">
+	        <div>{{task.deadline}} - {{task.label}}
+        		<div v-if="task.isMine">
+		          <div class="file-field input-field">
+		            <div class="btn">
+		              <span>File</span>
+		              <input type="file">
+		            </div>
+		            <div class="file-path-wrapper">
+		              <input class="file-path validate" type="text">
+		            </div>
+		          </div>
+		          <button style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
+		            <i class="material-icons right">send</i>
+		          </button>
+		          <div class="image-upload secondary-content">
+		            <i v-bind:class="{invis : !task.uploaded}" class="material-icons blackColor">check</i>
+		          </div>
+		      	</div>
+		      	<div v-if="!task.isMine && task.uploaded" class="secondary-content">
+		      		<a href="sample-1.jpg" download><i @click="task.switchReviewed()" class="material-icons blackIcon">file_download</i></a>
+		      	</div>
+	        </div>
+	      </li>
+	    </ul>
 	</div>
 </template>
 
