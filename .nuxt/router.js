@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const _5b2cdf30 = () => import('../pages/information.vue' /* webpackChunkName: "pages/information" */).then(m => m.default || m)
 const _ad7667e4 = () => import('../pages/index.vue' /* webpackChunkName: "pages/index" */).then(m => m.default || m)
 const _4c80caa6 = () => import('../pages/_name.vue' /* webpackChunkName: "pages/_name" */).then(m => m.default || m)
 
@@ -59,11 +60,16 @@ const scrollBehavior = function (to, from, savedPosition) {
 export function createRouter () {
   return new Router({
     mode: 'history',
-    base: '/thesis/',
+    base: '/',
     linkActiveClass: 'nuxt-link-active',
     linkExactActiveClass: 'nuxt-link-exact-active',
     scrollBehavior,
     routes: [
+		{
+			path: "/information",
+			component: _5b2cdf30,
+			name: "information"
+		},
 		{
 			path: "/",
 			component: _ad7667e4,

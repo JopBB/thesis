@@ -22,8 +22,8 @@
       </div>
       <div class="nav-wrapper">
         <ul class="">
-          <li><a href="#!">Timeline</a></li>
-          <li><a href="#!">Information</a></li>
+          <li><nuxt-link to="/">Timeline</nuxt-link></li>
+          <li><nuxt-link to="information">Information</nuxt-link></li>
           <!-- Dropdown Trigger -->
           <li><a ref="dropdown" class="dropdown-trigger" href="#!" data-target="dropdown1">Tasks<i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
