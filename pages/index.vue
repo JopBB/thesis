@@ -26,29 +26,15 @@
   <div>
     <navbar></navbar>
     <div class="container">
-
-      <ul v-for="member in members" class="collection with-header">
-        <li class="collection-header"><h4>{{member.name}}</h4></li>
-        <li v-for="task in member.tasks" v-bind:class="{teal : task.uploaded}" class="collection-item">
-          <div>{{task.deadline}} - {{task.label}}
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>File</span>
-                <input type="file">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-              </div>
-            </div>
-            <button style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
-              <i class="material-icons right">send</i>
-            </button>
-            <div class="image-upload secondary-content">
-              <i v-bind:class="{invis : !task.uploaded}" class="material-icons blackColor">check</i>
-            </div>
-          </div>
+      <a v-for="date in sortedTaskDates" class="btn-floating btn-large waves-effect waves-light red">
+        {{date.deadline}}
+      </a>
+      <ul class="collection">
+        <li class="collection-item" v-for="task in tasks">
+          {{task.label}}
         </li>
       </ul>
+
     </div>
   </div>
   
@@ -83,12 +69,31 @@ export default {
     }
   },
   methods:{
-    anotherFunctionName(){
-      if(jQuery){
-        console.log(members[0])
+  },
+  computed:{
+    sortedTaskDates(){
+      var membersList = members.members;
+      var lookup = {};
+      var result = [];
+      for (var i = 0; i < membersList.length; i++){
+        for (var task, j = 0; task = membersList[i].tasks[j++];) {
+          var deadline = task.deadline;
+          if (!(deadline in lookup)) {
+            lookup[deadline] = 1;
+            result.push({"deadline":deadline, "tasks":[task]});
+          }
+          else{
+            var found = result.find(function(element) {
+              return element.deadline===deadline;
+            });
+            found.tasks.push(task);
+          }
+        } 
       }
-      $("#buttonUnit").addClass("redBorder");
-      $("#buttonUnit").removeClass("blueBorder");
+      result.sort(function (a, b) {
+        return a.deadline.localeCompare(b.deadline);
+      });
+      return result;
     }
   }
 }

@@ -1,6 +1,6 @@
 export default class Task{
 	constructor(deadline, label, isMine, uploaded){
-		this.deadline = deadline.toString().substring(0, 10);
+		this.deadline = deadline.toString().substring(4, 10);
 		this.label=label;
 		this.isMine=isMine;
 		this.uploaded=uploaded;
