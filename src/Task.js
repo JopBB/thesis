@@ -10,7 +10,6 @@ export default class Task{
 	}
 	switchReviewed(){
 		this.reviewed = !this.reviewed;
-		console.log(this.label + " is now reviewed = " + this.reviewed)
 	}
 	switchUploaded(){
 		this.uploaded = true;
@@ -22,7 +21,6 @@ export default class Task{
 		this.canBeUploaded =true;
 	}
 	done(){
-		console.log(this.uploaded && this.reviewed)
 		return (this.uploaded && this.reviewed)
 	}
 
