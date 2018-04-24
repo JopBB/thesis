@@ -29,7 +29,7 @@
 		<div class="container">
 			<ul v-for="" class="collection with-header">
 		      <li class="collection-header"><h4>{{params.name}}</h4></li>
-		      <li v-for="task in memberTasks" v-bind:class="[{ teal: task.uploaded && task.reviewed }, { yellow: task.uploaded && !task.reviewed}]" class="collection-item red lighten 2">
+		      <li v-for="task in memberTasks" v-bind:class="[{ teal: task.done() }, { yellow: task.uploaded && !task.reviewed}]" class="collection-item red lighten 2">
 		        {{task.deadline}} - {{task.label}}
 		        <div class="secondary-content taskCheck">
 		        	<label>
@@ -95,7 +95,6 @@
 			}
 		},
 		mounted(){
-			console.log($(this.$refs.reviewedBox))
 	      $(this.$refs.reviewedBox).tooltip();
 	    }, 
 		computed:{

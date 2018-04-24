@@ -1,12 +1,9 @@
 <style>
 
-  .image-upload > .submitTheEvidence{
+  .image-upload > .submitTheEvidence, .invis{
     visibility:hidden;
     width:0;
     height:0
-  }
-  .invis{
-    visibility:hidden;
   }
   #iconSubmit{
     color:black;
@@ -19,6 +16,16 @@
   .blackColor{
     color:black;
   }
+  .btn-floating{
+
+  }
+  .timeline{
+    height:60vh;
+  }
+  .flexed{
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
 
 
@@ -26,14 +33,37 @@
   <div>
     <navbar></navbar>
     <div class="container">
-      <a v-for="date in sortedTaskDates" class="btn-floating btn-large waves-effect waves-light red">
+      <div class="timeline flexed valign-wrapper">
+        <button v-for="date in sortedTaskDates" class="btn-floating btn-large waves-effect waves-light red modal-trigger" :data-target="date.deadline">
         {{date.deadline}}
-      </a>
-      <ul class="collection">
-        <li class="collection-item" v-for="task in tasks">
-          {{task.label}}
-        </li>
+      </button>
+      </div>
+
+      <div v-for="date in sortedTaskDates" class="modal" :id="date.deadline">
+        <div class="modal-header">
+          <h4>{{date.deadline}}</h4>          
+        </div>
+        <div v-for="member in members" class="modal-content flexed">
+          <div>
+            {{member.name}} - {{percentageDone(date, member)}}
+            <nuxt-link style="float:right" :to="{path: member.name}"><i class="material-icons blackIcon">zoom_in</i></nuxt-link>
+          </div>
+          <div class="progress">
+            <div class="determinate" :style="{width:percentageDone(date, member)}"></div>
+          </div>
+        </div>
+      </div>
+
+      <ul v-for="date in sortedTaskDates" class="invis collection with-header" :id="date.deadline">
+        <li class="collection-header"><h4>{{date.deadline}}</h4></li>
+        <li v-for="member in members" class="collection-item">
+          {{member.name}} - {{percentageDone(date, member)}}
+          <div class="progress">
+            <div class="determinate" :style="{width:percentageDone(date, member)}"></div>
+          </div> 
+        </li>  
       </ul>
+      
 
     </div>
   </div>
@@ -69,6 +99,17 @@ export default {
     }
   },
   methods:{
+    toggleTasks(date){
+      if($("[id="+"'"+date.deadline+"'"+"]").hasClass("invis")){
+        $("[id="+"'"+date.deadline+"'"+"]").removeClass("invis")  
+      }else{
+        $("[id="+"'"+date.deadline+"'"+"]").addClass("invis")  
+      }      
+    },
+    percentageDone(date, member){
+      var doneDateTasks = member.tasks.filter(task => task.deadline===date.deadline && task.done()===true);
+      return (doneDateTasks.length/member.tasks.length)*100 + "%";
+    }
   },
   computed:{
     sortedTaskDates(){
@@ -76,17 +117,18 @@ export default {
       var lookup = {};
       var result = [];
       for (var i = 0; i < membersList.length; i++){
-        for (var task, j = 0; task = membersList[i].tasks[j++];) {
+        for (var j = 0; j < membersList[i].tasks.length;j++) {
+          var task = membersList[i].tasks[j];
           var deadline = task.deadline;
           if (!(deadline in lookup)) {
             lookup[deadline] = 1;
-            result.push({"deadline":deadline, "tasks":[task]});
+            result.push({"deadline":deadline, "ownerTasks":[{"task":task, "owner": membersList[i].name}]});
           }
           else{
             var found = result.find(function(element) {
               return element.deadline===deadline;
             });
-            found.tasks.push(task);
+            found.ownerTasks.push({"task":task, "owner":membersList[i].name});
           }
         } 
       }
@@ -95,6 +137,9 @@ export default {
       });
       return result;
     }
+  },
+  mounted(){
+    $('.modal').modal();
   }
 }
 </script>

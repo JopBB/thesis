@@ -4,26 +4,26 @@ export default class Task{
 		this.label=label;
 		this.isMine=isMine;
 		this.uploaded=uploaded;
-		this.reviewed=0;
-		this.done=0;
-		this.canBeReviewed=0;
-		this.canBeUploaded=0;
-	}
-	switchDone(){
-		this.done = !this.done;
+		this.reviewed=false;
+		this.canBeReviewed=false;
+		this.canBeUploaded=false;
 	}
 	switchReviewed(){
 		this.reviewed = !this.reviewed;
 		console.log(this.label + " is now reviewed = " + this.reviewed)
 	}
 	switchUploaded(){
-		this.uploaded = 1;
+		this.uploaded = true;
 	}
 	switchCanBeReviewed(){
-		this.canBeReviewed=1;
+		this.canBeReviewed=true;
 	}
 	switchCanBeUploaded(){
-		this.canBeUploaded =1;
+		this.canBeUploaded =true;
+	}
+	done(){
+		console.log(this.uploaded && this.reviewed)
+		return (this.uploaded && this.reviewed)
 	}
 
 }
