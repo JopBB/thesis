@@ -37,12 +37,13 @@
   .collection .collection-item{
   	margin-bottom:8px;
   	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  	border-bottom:none;
   }
   .collection.with-header .collection-header{
-  	border:none;
+  	border:1px solid #eee;
   }
   .collection.with-header{
-  	border-bottom:none;
+  	border:none;
   }
 </style>
 <template>
