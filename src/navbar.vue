@@ -9,6 +9,9 @@
   nav .nav-title{
     padding-left:1%;
   }
+  .nuxt-link-exact-active{
+    background-color: rgba(0,0,0,0.1);
+  }
 </style>
 
 <template>
@@ -42,6 +45,9 @@
     },
     mounted(){
       $(this.$refs.dropdown).dropdown();
+      if($('#dropdown1 > li > .nuxt-link-exact-active').length>=1){
+        $('.dropdown-trigger').addClass('nuxt-link-exact-active');
+      }
     }, 
   }
 </script>
