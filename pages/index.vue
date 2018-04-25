@@ -138,7 +138,7 @@ export default {
     navbar
   },
   head: {
-    title: 'Home page',
+    title: 'LiftOff',
     script: [
        { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js' },
        { src: 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js'}
@@ -147,6 +147,7 @@ export default {
     link: [
        { rel:'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css'},
        { rel:'stylesheet', href:'https://fonts.googleapis.com/icon?family=Material+Icons'}
+
     ]
   },
   data(){

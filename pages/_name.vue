@@ -45,6 +45,10 @@
   .collection.with-header{
   	border:none;
   }
+  .textUp{
+    top:-6px;
+    position: relative;
+  }
 </style>
 <template>
 	<div>
@@ -53,7 +57,7 @@
 			<ul v-for="" class="collection with-header">
 		      <li class="collection-header"><h4>{{params.name}}</h4></li>
 		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : !task.uploaded}]" class="collection-item">
-		        {{task.deadline}} - {{task.label}}
+		        <strong>{{task.deadline}} </strong> - {{task.label}}
 		        <div class="secondary-content taskCheck">
 		        	<label>
 	       				<input v-bind:checked="task.uploaded" type="checkbox" class="filled-in" disabled="disabled" />
@@ -71,7 +75,7 @@
 	        		<div v-if="task.isMine" style="text-align: right">
 			          <div @click="task.switchCanBeUploaded()" class="file-field input-field">
 			            <div class="btn niceBlue">
-			              <span>File</span>
+			              <span class="textUp">File</span>
 			              <input type="file">
 			            </div>
 			            <div class="file-path-wrapper">
@@ -100,7 +104,7 @@
 		  navbar
 		},
 		head: {
-		    title: 'Tasks',
+		    title: 'LiftOff',
 		    script: [
 		       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js' },
 		       { src: 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js'}
