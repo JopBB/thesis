@@ -22,6 +22,28 @@
   .taskCheck{
   	margin:0 10px;
   }
+  .taskDone{
+  	background-color: #C5FFCB !important;
+  }
+  .taskNotDone{
+  	background-color: #FFC5C5 !important;
+  }
+  .taskUploaded{
+  	background-color: #FFEBC5 !important;
+  }
+  .niceBlue{
+  	background-color: #008BA2;
+  }
+  .collection .collection-item{
+  	margin-bottom:5px;
+  	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  }
+  .collection.with-header .collection-header{
+  	border:none;
+  }
+  .collection.with-header{
+  	border-bottom:none;
+  }
 </style>
 <template>
 	<div>
@@ -29,7 +51,7 @@
 		<div class="container">
 			<ul v-for="" class="collection with-header">
 		      <li class="collection-header"><h4>{{params.name}}</h4></li>
-		      <li v-for="task in memberTasks" v-bind:class="[{ teal: task.done() }, { yellow: task.uploaded && !task.reviewed}]" class="collection-item red lighten 2">
+		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : !task.uploaded}]" class="collection-item">
 		        {{task.deadline}} - {{task.label}}
 		        <div class="secondary-content taskCheck">
 		        	<label>
@@ -45,9 +67,9 @@
 	   					<span v-if="task.canBeReviewed" >Reviewed</span>
 	      			</label>
 		        </div>
-	        		<div v-if="task.isMine">
+	        		<div v-if="task.isMine" style="text-align: right">
 			          <div @click="task.switchCanBeUploaded()" class="file-field input-field">
-			            <div class="btn">
+			            <div class="btn niceBlue">
 			              <span>File</span>
 			              <input type="file">
 			            </div>
@@ -55,7 +77,7 @@
 			              <input class="file-path validate" type="text">
 			            </div>
 			          </div>
-			          <button v-bind:disabled="!task.canBeUploaded" style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
+			          <button v-bind:disabled="!task.canBeUploaded" style="float:none;" @click="task.switchUploaded()" class="btn niceBlue" type="submit" name="action">Submit
 			            <i class="material-icons right">send</i>
 			          </button>
 			      	</div>

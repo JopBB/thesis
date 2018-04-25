@@ -23,5 +23,4 @@ export default class Task{
 	done(){
 		return (this.uploaded && this.reviewed)
 	}
-
 }

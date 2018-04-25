@@ -26,29 +26,15 @@
   <div>
     <navbar></navbar>
     <div class="container">
+      <div>
+        <h3>Deadline: 4 June</h3>
 
-      <ul v-for="member in members" class="collection with-header">
-        <li class="collection-header"><h4>INFORMATION</h4></li>
-        <li v-for="task in member.tasks" v-bind:class="{teal : task.uploaded}" class="collection-item">
-          <div>{{task.deadline}} - {{task.label}}
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>File</span>
-                <input type="file">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-              </div>
-            </div>
-            <button style="float:none;" @click="task.switchUploaded()" class="btn" type="submit" name="action">Submit
-              <i class="material-icons right">send</i>
-            </button>
-            <div class="image-upload secondary-content">
-              <i v-bind:class="{invis : !task.uploaded}" class="material-icons blackColor">check</i>
-            </div>
-          </div>
-        </li>
-      </ul>
+        <h3>Members:</h3>
+        <p v-for="member in members">
+          {{member.name}}
+        </p>
+
+      </div>
     </div>
   </div>
   
@@ -83,13 +69,6 @@ export default {
     }
   },
   methods:{
-    anotherFunctionName(){
-      if(jQuery){
-        console.log(members[0])
-      }
-      $("#buttonUnit").addClass("redBorder");
-      $("#buttonUnit").removeClass("blueBorder");
-    }
   }
 }
 </script>
