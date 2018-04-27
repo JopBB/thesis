@@ -23,7 +23,4 @@ export default class Task{
 	done(){
 		return (this.uploaded && this.reviewed)
 	}
-	isReview(){
-		return this.label.toLowerCase().substring(0,6)==="review"
-	}
 }

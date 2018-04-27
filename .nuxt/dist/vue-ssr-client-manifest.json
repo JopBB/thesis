@@ -1,26 +1,26 @@
 {
   "publicPath": "/thesis/_nuxt/",
   "all": [
-    "pages/information.ceb98f3c7ae5adc09ac5.js",
-    "pages/index.c524b772e2fc26960477.js",
-    "pages/_name.59cae24532812289a51f.js",
+    "pages/information.a7ae2ebd50b9c95fe7f8.js",
+    "pages/index.c8fe774ac69fd39458a3.js",
+    "pages/_name.b0f1f7ca6b0f7e77289d.js",
     "layouts/default.0a9ea840477ea6c560c6.js",
     "vendor.826f138d91a64c6061e9.js",
     "app.2f20e55a593dd9a7d937.js",
-    "manifest.818f5da69cbf55c784bf.js",
+    "manifest.3b555eb77291cdaddb83.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.818f5da69cbf55c784bf.js",
+    "manifest.3b555eb77291cdaddb83.js",
     "vendor.826f138d91a64c6061e9.js",
     "app.2f20e55a593dd9a7d937.js"
   ],
   "async": [
-    "pages/information.ceb98f3c7ae5adc09ac5.js",
-    "pages/index.c524b772e2fc26960477.js",
-    "pages/_name.59cae24532812289a51f.js",
+    "pages/information.a7ae2ebd50b9c95fe7f8.js",
+    "pages/index.c8fe774ac69fd39458a3.js",
+    "pages/_name.b0f1f7ca6b0f7e77289d.js",
     "layouts/default.0a9ea840477ea6c560c6.js"
   ],
   "modules": {
@@ -1002,9 +1002,6 @@
     "5274304c": [
       5
     ],
-    "2ea586e5": [
-      4
-    ],
     "26c4f9c0": [
       4
     ],
@@ -1019,6 +1016,9 @@
     ],
     "70ba32dc": [
       5
+    ],
+    "2ea586e5": [
+      4
     ]
   }
 }
