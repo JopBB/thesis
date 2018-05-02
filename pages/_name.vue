@@ -176,9 +176,20 @@
 						}
 					}
 				}
-				var reviewMemberIndex = this.getRandomWithOneExclusion(taskMemberIndex)
+				var reviewMemberIndex = this.getMemberIndexWithLeastTasks()
 				console.log(membersList[reviewMemberIndex].name)
 				membersList[reviewMemberIndex].reviewTasks.push(newReview) 
+	    	},
+	    	getMemberIndexWithLeastTasks(){
+	    		var membersList = members.members;
+	    		membersList.sort(function(a,b){
+	    			return (a.tasks.length+a.reviewTasks.length) > (b.tasks.length+b.reviewTasks.length)
+	    		});
+	    		for(var i=0; i<membersList.length;i++){
+	    			var totalTasks = membersList[i].tasks.length + membersList[i].reviewTasks.length 
+	    			console.log(membersList[i].name + ' heeft ' + totalTasks + ' taken in totaal')
+	    		}
+	    		return members.members.indexOf(membersList[0]);
 	    	},
     		getRandomWithOneExclusion(indexToExclude){
 				var rand = null;  //an integer
