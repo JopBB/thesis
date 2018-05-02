@@ -77,6 +77,7 @@
 			<ul v-for="" class="collection with-header">
 		      <li class="collection-header"><h4>{{params.name}}: Tasks</h4></li>
 		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad'}]" class="collection-item greyBackground">
+		      	<button class="btn" @click="deleteTask(task)"><li class="material-icons">delete</li></button>
 		        <strong>{{task.deadline}} </strong> - {{task.label}}
 		        <div class="secondary-content taskCheck">
 		        	<label>
@@ -242,7 +243,7 @@
 				  if (result.value) {
 
 				  	task.review=result.value[0];
-				  	if(task.review="bad"){
+				  	if(task.review==="bad"){
 				  		that.copyAfterBadReview(task);
 				  	}
 				    swal({
@@ -269,8 +270,36 @@
 			        return newADate-newBDate;
 		      	});	
 		      	return tasks;
+			},
+			deleteTask(task){
+				swal({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+					if (result.value) {
+						var membersList = members.members;
+						var tasks;
+							for (var i = 0; i < membersList.length; i++){
+								if(membersList[i].name===this.$route.params.name){
+									tasks=membersList[i].tasks
+								}
+							}
+						var index=tasks.indexOf(task);
+						tasks.splice(index, 1);
+				    	swal(
+				    		'Deleted!',
+				    		'Your file has been deleted.',
+				    		'success'
+			    		)
+				  	}
+				})
 			}
-	    },
+		},
 		computed:{
 			memberTasks: function(){
 				var membersList = members.members;
