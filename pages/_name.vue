@@ -1,70 +1,73 @@
 <style>
-  body{
-  	overflow: auto;
-  }
-  .image-upload > .submitTheEvidence{
-    visibility:hidden;
-    width:0;
-    height:0
-  }
-  .invis{
-    visibility:hidden;
-  }
-  .blackIcon{
-    color:black;
-    border: 1px solid black;
-    border-radius:5px;
-    background-color: #26a69a;
-    margin-top:-2px;
-  }
-  .blackIcon:hover{
-    background-color:#AAAAAA;
-  }
-  .blackColor{
-    color:black;
-  }
-  .taskCheck{
-  	margin:0 10px;
-  }
-  .taskCheck button{
-  	margin-top:-5px;
-  }
-  .taskDone{
-  	background-color: #C5FFCB !important;
-  }
-  .taskNotDone{
-  	background-color: #FFC5C5 !important;
-  }
-  .taskUploaded{
-  	background-color: #FFEBC5 !important;
-  }
-  .niceBlue{
-  	background-color: #008BA2;
-  }
-  .collection .collection-item{
-  	margin-bottom:8px;
-  	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-  	border-bottom:none;
-  }
-  .collection.with-header .collection-header, .collection.with-header .collection-item{
-  	border-right:1px solid #eee;
-  	border-left:1px solid #eee;
-  }
+	body{
+		overflow: scroll;
+	}
+	.image-upload > .submitTheEvidence{
+	visibility:hidden;
+	width:0;
+	height:0
+	}
+	.invis{
+	visibility:hidden;
+	}
+	.blackIcon{
+	color:black;
+	border: 1px solid black;
+	border-radius:5px;
+	background-color: #26a69a;
+	margin-top:-2px;
+	}
+	.blackIcon:hover{
+	background-color:#AAAAAA;
+	}
+	.blackColor{
+	color:black;
+	}
+	.taskCheck{
+		margin:0 10px;
+	}
+	.taskCheck button{
+		margin-top:-5px;
+	}
+	.taskDone{
+		background-color: #C5FFCB !important;
+	}
+	.taskNotDone{
+		background-color: #FFC5C5 !important;
+	}
+	.taskUploaded{
+		background-color: #FFEBC5 !important;
+	}
+	.niceBlue{
+		background-color: #008BA2;
+	}
+	.collection .collection-item{
+		margin-bottom:8px;
+		box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+		border-bottom:none;
+	}
+	.collection.with-header .collection-header, .collection.with-header .collection-item{
+		border-right:1px solid #eee;
+		border-left:1px solid #eee;
+	}
 
-  .collection.with-header{
-  	border:none;
-  }
-  .textUp{
-    top:-6px;
-    position: relative;
-  }
-  input[type="radio"]:not(:checked), input[type="radio"]:checked{
-  	opacity: 1;
-  	position: relative;
-  }
-  .collection-item.greyBackground{
-  	background-color: #eee;
-  }
+	.collection.with-header{
+		border:none;
+	}
+	.textUp{
+	top:-6px;
+	position: relative;
+	}
+	input[type="radio"]:not(:checked), input[type="radio"]:checked{
+		opacity: 1;
+		position: relative;
+	}
+	.collection-item.greyBackground{
+		background-color: #eee;
+	}
+	.container{
+	max-width:100%;
+	}
 </style>
 <template>
 	<div>
@@ -74,7 +77,7 @@
 			<ul v-for="" class="collection with-header">
 		      <li class="collection-header"><h4>{{params.name}}: Tasks</h4></li>
 		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad'}]" class="collection-item greyBackground">
-		        <strong>{{task.deadline}} </strong> - {{task.label}} - isPastDeadline:{{task.isPastDeadline()}}
+		        <strong>{{task.deadline}} </strong> - {{task.label}}
 		        <div class="secondary-content taskCheck">
 		        	<label>
 	       				<input v-bind:checked="task.uploaded" type="checkbox" class="filled-in" disabled="disabled" />
@@ -126,6 +129,7 @@
  	import ReviewTask from '~/src/ReviewTask.js';
  	import currentDate from '~/src/currentDate.vue';
  	import currentDateState from '~/src/currentDateState.js';
+ 	import Task from '~/src/Task.js';
 	export default{
 		components:{
 		  navbar,
@@ -147,7 +151,7 @@
 			return{
 				params:this.$route.params,
 				members:members.members,
-				currentDateState: currentDateState
+				currentDateState: currentDateState,
 			}
 		},
 		mounted(){
@@ -156,7 +160,7 @@
 	    methods:{
 	    	uploadFile: function(task){
 	    		task.switchUploaded();
-	    		var reviewDate = this.setReviewDate(task.deadline);
+	    		var reviewDate = this.setNewDate(task.deadline, 2);
 	    		var membersList = members.members;
 	    		var taskMemberIndex;
 	    		var reviewName="Review \'" + task.label + "\' by " + this.$route.params.name;
@@ -184,9 +188,9 @@
 			    }
 				return rand;
 			},
-			setReviewDate(date){
+			setNewDate(date, extraTime){
 				var result = new Date(date);
-				result.setDate(result.getDate() + 3);
+				result.setDate(result.getDate() + extraTime);
 				return result;
 			},
 			findWithAttr(array, attr, value) {
@@ -198,6 +202,7 @@
 			    return -1;
 			},
 			async reviewTask(task){
+				var that = this;
 				swal.setDefaults({
 				  confirmButtonText: 'Next &rarr;',
 				  showCancelButton: true
@@ -222,6 +227,9 @@
 				  if (result.value) {
 
 				  	task.review=result.value[0];
+				  	if(task.review="bad"){
+				  		that.copyAfterBadReview(task);
+				  	}
 				    swal({
 				      title: 'All done!',
 				      text:
@@ -229,14 +237,31 @@
 				      confirmButtonText: 'OK.'
 				    })
 				  }	
-		  	}
+		  	},
+		  	copyAfterBadReview(task){
+		  		var membersList = members.members;
+		  		var newDeadline = this.setNewDate(task.deadline, task.minDaysNeeded);
+		  		for (var i = 0; i < membersList.length; i++){
+					if(membersList[i].name===this.$route.params.name){
+						membersList[i].tasks.push(new Task(newDeadline, task.label + ' retry after failed attempt', false, task.minDaysNeeded))
+					}
+				}
+		  	},
+			sortedTasks(tasks){
+				tasks.sort(function (a, b) {
+			        var newADate = new Date(a.deadline)
+			        var newBDate = new Date(b.deadline)
+			        return newADate-newBDate;
+		      	});	
+		      	return tasks;
+			}
 	    },
 		computed:{
 			memberTasks: function(){
 				var membersList = members.members;
 				for (var i = 0; i < membersList.length; i++){
 					if(membersList[i].name===this.$route.params.name){
-						return membersList[i].tasks;
+						return this.sortedTasks(membersList[i].tasks);
 					}
 				}
 			},

@@ -22,19 +22,34 @@
             </div>
           </div>
 
-        <div class="input-field col s6">
-          <input v-model="taskName" id="taskName" type="text">
-          <label for="taskName">Task Name</label>
-        </div>
-        
-        <div class="input-field col s6">
-          <input type="text" id="deadline" class="datepicker">
-          <label for="deadline">Deadline</label>
-        </div>
+          <div class="input-field col s6">
+            <input v-model="taskName" id="taskName" type="text">
+            <label for="taskName">Task Name</label>
+          </div>
+          
+          <div class="input-field col s6">
+            <input type="text" id="deadline" class="datepicker">
+            <label for="deadline">Deadline</label>
+          </div>
 
-        <button class="btn" type="submit" @click="addTask()">Add Task
-          <i class="material-icons right">send</i>
-        </button>
+          <div class="input-field col col-6 s6">
+            <input v-model="minDaysNeeded" id="minDaysNeeded" type="number">
+            <label for="minDaysNeeded">Estimation of minimum days needed for task</label>
+          </div>
+
+          <div class="col col-6">
+            <label for="uploaded">
+              <input type="checkbox" v-model="uploaded" id="uploaded">
+              <span>uploaded for debugging</span>
+            </label>
+          </div>
+
+          <button class="btn" type="submit" @click="addTask()">Add Task
+            <i class="material-icons right">send</i>
+          </button>
+
+         
+
         </div>
       </div>
     </div>
@@ -74,19 +89,23 @@ export default {
       members: members.members,
       taskMember:"",
       taskName:"",
-      taskDeadline:""
+      taskDeadline:"",
+      minDaysNeeded:"",
+      uploaded:false
 
     }
   },
   methods:{
     addTask(){
-      if(this.taskMember==="" || this.taskName==="" || this.taskDeadline===""){
+      console.log(this.minDaysNeeded)
+      if(this.taskMember==="" || this.taskName==="" || $('.datepicker').val()==="" || this.minDaysNeeded===""){
         swal('Please fill in all the fields', '', 'warning')
+        return;
       }
       this.taskDeadline=$('.datepicker').val()
       for(var i=0; i<this.members.length;i++){
         if(this.members[i]===this.taskMember){
-          this.members[i].tasks.push(new Task(new Date(this.taskDeadline),this.taskName, false));
+          this.members[i].tasks.push(new Task(new Date(this.taskDeadline),this.taskName, this.uploaded, this.minDaysNeeded));
           swal('New task was added to ' + this.taskMember.name + '\'s list!', '','success')
         }
       }
