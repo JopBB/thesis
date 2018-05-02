@@ -6,8 +6,9 @@ export default class Person{
 	}
 	amountOfSlackingDone(){
 		var result=0;
-		for(var i; i<this.tasks.length; i++){
-			if(tasks[i].isPastDeadline()){
+		console.log(this.tasks.length);
+		for(var i=0; i<this.tasks.length; i++){
+			if(this.tasks[i].isPastDeadline()){
 				result++;
 			}
 		}

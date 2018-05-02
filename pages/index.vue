@@ -160,7 +160,8 @@ export default {
   },
   data(){
     return{
-      members: members.members
+      members: members.members,
+      firstMember: members.members[0].tasks
     }
   },
   methods:{
