@@ -1,8 +1,7 @@
 export default class ReviewTask{
-	constructor(deadline, label, isMine){
+	constructor(deadline, label){
 		this.deadline = deadline.toString().substring(4, 10);
 		this.label=label;
-		this.isMine=isMine;
 		this.done=false;
 	}
 	switchDone(){

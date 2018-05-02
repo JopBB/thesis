@@ -8,21 +8,22 @@
 <template>
   <div>
     <navbar></navbar>
+    <currentDate></currentDate>
     <div class="container">
       <div>
         <h1>New Task</h1>
         <div class="newTaskForm">
           <div class="input-field col m6">
             <div class="select-wrapper">
-              <select>
-                <option value="" disabled selected>Choose your option</option>
+              <select v-model="taskMember">
+                <option value="" disabled selected>Group member</option>
                 <option v-for="member in members" :value=member>{{member.name}}</option>
               </select>
             </div>
           </div>
 
         <div class="input-field col s6">
-          <input id="taskName" type="text" class="validate">
+          <input v-model="taskName" id="taskName" type="text">
           <label for="taskName">Task Name</label>
         </div>
         
@@ -31,6 +32,9 @@
           <label for="deadline">Deadline</label>
         </div>
 
+        <button class="btn" type="submit" @click="addTask()">Add Task
+          <i class="material-icons right">send</i>
+        </button>
         </div>
       </div>
     </div>
@@ -45,9 +49,13 @@
 import swal from 'sweetalert2';
 import members from '~/src/members.js';
 import navbar from '~/src/navbar.vue';
+import Task from '~/src/Task.js';
+import currentDate from '~/src/currentDate.vue';
+
 export default {
   components:{
-    navbar
+    navbar,
+    currentDate
   },
   head: {
     title: 'LiftOff',
@@ -63,14 +71,31 @@ export default {
   },
   data(){
     return{
-      members: members.members
+      members: members.members,
+      taskMember:"",
+      taskName:"",
+      taskDeadline:""
+
     }
   },
   methods:{
+    addTask(){
+      if(this.taskMember==="" || this.taskName==="" || this.taskDeadline===""){
+        swal('Please fill in all the fields', '', 'warning')
+      }
+      this.taskDeadline=$('.datepicker').val()
+      for(var i=0; i<this.members.length;i++){
+        if(this.members[i]===this.taskMember){
+          this.members[i].tasks.push(new Task(new Date(this.taskDeadline),this.taskName, false));
+          swal('New task was added to ' + this.taskMember.name + '\'s list!', '','success')
+        }
+      }
+    }
   },
   mounted(){
     $('select').formSelect();
     $('.datepicker').datepicker();
+
   }
 }
 </script>

@@ -3,9 +3,14 @@ export default class Person{
 		this.name = name;
 		this.tasks=tasks;
 		this.reviewTasks = reviewTasks;
-		this.amountOfSlackingDone=0;
 	}
-	addSlack(){
-		this.amountOfSlackingDone++;
+	amountOfSlackingDone(){
+		var result=0;
+		for(var i; i<this.tasks.length; i++){
+			if(tasks[i].isPastDeadline()){
+				result++;
+			}
+		}
+		return result;
 	}
 }

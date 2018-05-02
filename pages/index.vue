@@ -1,5 +1,7 @@
 <style>
-
+  body{
+    overflow: hidden;
+  }
   .image-upload > .submitTheEvidence, .invis{
     visibility:hidden;
     width:0;
@@ -54,12 +56,16 @@
   .modal{
     height:415px;
   }
+  .container{
+    max-width:100%;
+  }
 </style>
 
 
 <template>
   <div>
     <navbar></navbar>
+    <currentDate></currentDate>
     <div class="container">
       <div class="timeline flexed valign-wrapper">
         <div class="timelineBlackline flexed">
@@ -133,9 +139,11 @@
 import swal from 'sweetalert2';
 import members from '~/src/members.js';
 import navbar from '~/src/navbar.vue';
+import currentDate from '~/src/currentDate.vue';
 export default {
   components:{
-    navbar
+    navbar,
+    currentDate
   },
   head: {
     title: 'LiftOff',
@@ -185,9 +193,9 @@ export default {
         } 
       }
       result.sort(function (a, b) {
-        a = a.deadline.split('/').reverse().join('');
-        b = b.deadline.split('/').reverse().join('');
-        return a - b;
+        var newADate = new Date(a.deadline)
+        var newBDate = new Date(b.deadline)
+        return newADate-newBDate;
       });
       result[result.length-1].last=true;
       return result;
