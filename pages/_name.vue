@@ -189,7 +189,11 @@
 	    			var totalTasks = membersList[i].tasks.length + membersList[i].reviewTasks.length 
 	    			console.log(membersList[i].name + ' heeft ' + totalTasks + ' taken in totaal')
 	    		}
-	    		return members.members.indexOf(membersList[0]);
+	    		if(membersList[0].name===this.$route.params.name){
+	    			return members.members.indexOf(membersList[1])
+	    		}else{
+	    			return members.members.indexOf(membersList[0])
+	    		}
 	    	},
     		getRandomWithOneExclusion(indexToExclude){
 				var rand = null;  //an integer

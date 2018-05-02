@@ -5,11 +5,11 @@ export default{
 	members:[
 		new Person("Tommy", [
 			new Task(new Date('5 may 2018 23:00' ),"Write code for login-form", true, 2),
-			new Task(new Date('12 may 2018 23:00'),"Write related work, section 1 and 2", false, 2),
-			new Task(new Date('12 may 2018 23:00'),"Write related work, section 7 and 8", false, 3),
-			new Task(new Date('19 may 2018 23:00'),"Finish prototype", false, 2),
-			new Task(new Date('24 may 2018 23:00'),"Write conclusion and abstract for paper", false, 2),
-			new Task(new Date('4 june 2018 23:00'),"Finish the paper", false, 4)
+			new Task(new Date('12 may 2018 23:00'),"Write related work, section 1 and 2", false, 2)
+			// new Task(new Date('12 may 2018 23:00'),"Write related work, section 7 and 8", false, 3),
+			// new Task(new Date('19 may 2018 23:00'),"Finish prototype", false, 2),
+			// new Task(new Date('24 may 2018 23:00'),"Write conclusion and abstract for paper", false, 2),
+			// new Task(new Date('4 june 2018 23:00'),"Finish the paper", false, 4)
 			],[
 			new ReviewTask(new Date('8 may 2018 23:00'), "Review \'Write Related Work section 3 and 4\' by Denny")
 			]),
