@@ -1,30 +1,31 @@
 <style>
 	body{
 		overflow: scroll;
+		overflow-x: hidden;
 	}
 	.image-upload > .submitTheEvidence{
-	visibility:hidden;
-	width:0;
-	height:0
+		visibility:hidden;
+		width:0;
+		height:0
 	}
 	.invis{
-	visibility:hidden;
+		visibility:hidden;
 	}
 	.blackIcon{
-	color:black;
-	border: 1px solid black;
-	border-radius:5px;
-	background-color: #26a69a;
-	margin-top:-2px;
+		color:black;
+		border: 1px solid black;
+		border-radius:5px;
+		background-color: #26a69a;
+		margin-top:-2px;
 	}
 	.blackIcon:hover{
-	background-color:#AAAAAA;
+		background-color:#AAAAAA;
 	}
 	.blackColor{
-	color:black;
+		color:black;
 	}
 	.taskCheck{
-		margin:0 10px;
+		margin:7px 10px;
 	}
 	.taskCheck button{
 		margin-top:-5px;
@@ -55,8 +56,8 @@
 		border:none;
 	}
 	.textUp{
-	top:-6px;
-	position: relative;
+		top:-6px;
+		position: relative;
 	}
 	input[type="radio"]:not(:checked), input[type="radio"]:checked{
 		opacity: 1;
@@ -66,7 +67,18 @@
 		background-color: #eee;
 	}
 	.container{
-	max-width:100%;
+		max-width:100%;
+	}
+	.redIcon{
+		color:red;
+	}
+	.removeButton{
+		padding-top:5px;
+		padding-left: 0px;
+		outline:none !important;
+	}
+	.removeButton:focus{
+		background-color: inherit;
 	}
 </style>
 <template>
@@ -76,8 +88,8 @@
 		<div class="container">
 			<ul v-for="" class="collection with-header">
 		      <li class="collection-header"><h4>{{params.name}}: Tasks</h4></li>
-		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad'}]" class="collection-item greyBackground">
-		      	<button class="btn" @click="deleteTask(task)"><li class="material-icons">delete</li></button>
+		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
+		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
 		        <strong>{{task.deadline}} </strong> - {{task.label}}
 		        <div class="secondary-content taskCheck">
 		        	<label>
@@ -103,15 +115,15 @@
 			            <i class="material-icons right">send</i>
 			          </button>
 			      	</div>
-			      	<div v-if="findWithAttr(members, 'name', params.name)!==0 && task.uploaded" class="secondary-content">
+			      	<div v-if="findWithAttr(members, 'name', params.name)!==0 && task.uploaded" class="secondary-content taskCheck">
 			      		<a href="sample-1.jpg" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
 			      	</div>
 		        
 		      </li>
 		      <li class="collection-header"><h4>{{params.name}}: Reviews</h4></li>
-		      <li v-for="reviewTask in memberReviewTasks" v-bind:class="{taskDone:reviewTask.done}" class="collection-item greyBackground">
+		      <li v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
 		      	<strong>{{reviewTask.deadline}} </strong> - {{reviewTask.label}}
-		      	<div class="secondary-content taskCheck">
+		      	<div class="secondary-content">
 		        	<label>
 	       				<input v-model="reviewTask.done" type="checkbox" class="filled-in" v-bind:disabled="findWithAttr(members, 'name', params.name)!==0" />
 	   					<span>Done</span>
