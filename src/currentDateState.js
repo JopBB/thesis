@@ -1,13 +1,15 @@
 export default{
   currentDate: new Date(Date.now()),
-  nextWeek(){
+  nextDay(){
     var newDate = new Date(this.currentDate);
-    newDate.setDate(this.currentDate.getDate() + 7);
+    newDate.setDate(this.currentDate.getDate() + 1);
+    newDate.setHours(1)
     this.currentDate = newDate
   },
-  previousWeek(){
+  previousDay(){
     var newDate = new Date(this.currentDate);
-    newDate.setDate(this.currentDate.getDate() -7);
+    newDate.setDate(this.currentDate.getDate() -1);
+    newDate.setHours(1)
     this.currentDate = newDate
   },
   currentDateString(){

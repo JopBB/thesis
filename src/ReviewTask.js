@@ -9,7 +9,7 @@ export default class ReviewTask{
 		this.done = !this.done;
 	}
 	isPastDeadline(){
-		 return new Date(this.deadline + ' 2018') < currentDateState.currentDate;
+		 return new Date(this.deadline + ' 2018 23:00') < currentDateState.currentDate;
 	}
 	isSlacked(){
 		return (this.isPastDeadline() && !this.done);

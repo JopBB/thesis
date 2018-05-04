@@ -1,6 +1,6 @@
 <style>
   body{
-    overflow: hidden;
+    overflow-x: hidden;
   }
   .image-upload > .submitTheEvidence, .invis{
     visibility:hidden;

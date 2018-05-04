@@ -1,7 +1,12 @@
 <style>
+	body, html{
+		height:100%;
+		/*background-color: #EEE;*/
+		background: linear-gradient(#EFEFEF, #E1E1E1);
+	}
 	body{
-		overflow: scroll;
-		overflow-x: hidden;
+		overflow: hidden;
+		overflow-y: auto;
 	}
 	.image-upload > .submitTheEvidence{
 		visibility:hidden;
@@ -64,7 +69,7 @@
 		position: relative;
 	}
 	.collection-item.greyBackground{
-		background-color: #eee;
+		/*background-color: #eee;*/
 	}
 	.container{
 		max-width:100%;
@@ -87,7 +92,7 @@
 	    <currentDate></currentDate>
 		<div class="container">
 			<ul v-for="" class="collection with-header">
-		      <li class="collection-header"><h4>{{params.name}}: Tasks</h4></li>
+		      <h4>{{params.name}}: Tasks</h4>
 		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
 		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
 		        <strong>{{task.deadline}} </strong> - {{task.label}}
@@ -120,7 +125,7 @@
 			      	</div>
 		        
 		      </li>
-		      <li class="collection-header"><h4>{{params.name}}: Reviews</h4></li>
+		      <h4>{{params.name}}: Reviews</h4>
 		      <li v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
 		      	<strong>{{reviewTask.deadline}} </strong> - {{reviewTask.label}}
 		      	<div class="secondary-content">

@@ -8,6 +8,7 @@ export default class Task{
 		this.canBeReviewed=false;
 		this.canBeUploaded=false;
 		this.review=undefined;
+		this.oldTask=false;
 	}
 	switchUploaded(){
 		this.uploaded = true;
@@ -25,7 +26,7 @@ export default class Task{
 		return this.review!==undefined;
 	}
 	isPastDeadline(){
-		 return new Date(this.deadline + ' 2018') < currentDateState.currentDate;
+		 return new Date(this.deadline + ' 2018 23:00') < currentDateState.currentDate;
 	}
 	isSlacked(){
 		return (this.isPastDeadline() && !this.uploaded) || (this.isPastDeadline() && this.review==='bad');
