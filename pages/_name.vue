@@ -30,7 +30,7 @@
 		color:black;
 	}
 	.taskCheck{
-		margin:7px 10px;
+		margin:-13px 10px;
 	}
 	.taskCheck button{
 		margin-top:-5px;
@@ -95,7 +95,9 @@
 		      <h4>{{params.name}}: Tasks</h4>
 		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
 		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
-		        <strong>{{task.deadline}} </strong> - {{task.label}}
+		        <span class="title"><strong>{{task.deadline}} </strong></span>
+		         <br /><span style="width:400px; word-wrap:break-word; display:inline-block;"> {{task.label}}</span>
+		        
 		        <div class="secondary-content taskCheck">
 		        	<label>
 	       				<input v-bind:checked="task.uploaded" type="checkbox" class="filled-in" disabled="disabled" />
@@ -123,6 +125,9 @@
 			      	<div v-if="findWithAttr(members, 'name', params.name)!==0 && task.uploaded" class="secondary-content taskCheck">
 			      		<a href="sample-1.jpg" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
 			      	</div>
+			      	<div class="secondary-content taskCheck" v-if="task.version===3 && findWithAttr(members, 'name', params.name)!==0">
+		        		<button style="float:none;" @click="takeOver(task)" class="btn-small">take over</button>
+		        	</div>
 		        
 		      </li>
 		      <h4>{{params.name}}: Reviews</h4>
@@ -176,6 +181,26 @@
 	      $(this.$refs.reviewedBox).tooltip();
 	    }, 
 	    methods:{
+	    	takeOver: function(task){
+	      		swal({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, give me this task!'
+				}).then((result) => {
+					if (result.value) {
+			    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label, false, task.minDaysNeeded, 4))
+				    	swal(
+				    		'OK!',
+				    		'This task has been assigned to you!',
+				    		'success'
+			    		)
+				  	}
+				})
+	    	},
 	    	uploadFile: function(task){
 	    		task.switchUploaded();
 	    		var reviewDate = this.setNewDate(task.deadline, 2);
@@ -195,22 +220,19 @@
 					}
 				}
 				var reviewMemberIndex = this.getMemberIndexWithLeastTasks()
-				console.log(membersList[reviewMemberIndex].name)
+				// console.log(membersList[reviewMemberIndex].name)
 				membersList[reviewMemberIndex].reviewTasks.push(newReview) 
 	    	},
 	    	getMemberIndexWithLeastTasks(){
 	    		var membersList = members.members;
-	    		membersList.sort(function(a,b){
-	    			return (a.tasks.length+a.reviewTasks.length) > (b.tasks.length+b.reviewTasks.length)
-	    		});
-	    		for(var i=0; i<membersList.length;i++){
-	    			var totalTasks = membersList[i].tasks.length + membersList[i].reviewTasks.length 
-	    			console.log(membersList[i].name + ' heeft ' + totalTasks + ' taken in totaal')
-	    		}
-	    		if(membersList[0].name===this.$route.params.name){
-	    			return members.members.indexOf(membersList[1])
+				var sorted = membersList.slice(0).sort(function(a,b){
+				    return (a.tasks.length+a.reviewTasks.length) > (b.tasks.length+b.reviewTasks.length)
+				});
+
+	    		if(sorted[0].name===this.$route.params.name){
+	    			return members.members.indexOf(sorted[1])
 	    		}else{
-	    			return members.members.indexOf(membersList[0])
+	    			return members.members.indexOf(sorted[0])
 	    		}
 	    	},
     		getRandomWithOneExclusion(indexToExclude){
@@ -227,12 +249,12 @@
 				return result;
 			},
 			findWithAttr(array, attr, value) {
-			    for(var i = 0; i < array.length; i += 1) {
+			    for(var i = 0; i < array.length; i++) {
 			        if(array[i][attr] === value) {
 			            return i;
 			        }
 			    }
-			    return -1;
+			    // return -1;
 			},
 			async reviewTask(task){
 				var that = this;
@@ -310,7 +332,7 @@
 						tasks.splice(index, 1);
 				    	swal(
 				    		'Deleted!',
-				    		'Your file has been deleted.',
+				    		'The task has been deleted.',
 				    		'success'
 			    		)
 				  	}

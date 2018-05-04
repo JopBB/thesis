@@ -105,7 +105,7 @@ export default {
       this.taskDeadline=$('.datepicker').val()
       for(var i=0; i<this.members.length;i++){
         if(this.members[i]===this.taskMember){
-          this.members[i].tasks.push(new Task(new Date(this.taskDeadline),this.taskName, this.uploaded, this.minDaysNeeded));
+          this.members[i].tasks.push(new Task(new Date(this.taskDeadline),this.taskName, this.uploaded, this.minDaysNeeded, 1));
           swal('New task was added to ' + this.taskMember.name + '\'s list!', '','success')
         }
       }

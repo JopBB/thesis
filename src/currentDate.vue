@@ -83,7 +83,12 @@
             if(oldTask.isPastDeadline() && !oldTask.uploaded ){
               if(!oldTask.oldTask){
                 oldTask.oldTask=true;
-                membersList[i].tasks.push(new Task(newDeadline, oldTask.label + ' retry after not uploaded', false, oldTask.minDaysNeeded))
+                if(oldTask.version===1){
+                  membersList[i].tasks.push(new Task(newDeadline, oldTask.label + ' retry after not uploaded', false, oldTask.minDaysNeeded, 2))
+                }
+                if(oldTask.version===2){
+                  membersList[i].tasks.push(new Task(newDeadline, oldTask.label + ' 2 times', false, oldTask.minDaysNeeded, 3))
+                }
               }
             }
           }

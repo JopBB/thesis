@@ -1,6 +1,6 @@
 import currentDateState from '~/src/currentDateState.js';
 export default class Task{
-	constructor(deadline, label, uploaded, minDaysNeeded){
+	constructor(deadline, label, uploaded, minDaysNeeded, version){
 		this.deadline = deadline.toString().substring(4, 10);
 		this.label=label;
 		this.uploaded=uploaded;
@@ -9,6 +9,8 @@ export default class Task{
 		this.canBeUploaded=false;
 		this.review=undefined;
 		this.oldTask=false;
+		this.version=version;
+		this.isReassigned = false;
 	}
 	switchUploaded(){
 		this.uploaded = true;
