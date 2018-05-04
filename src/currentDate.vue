@@ -1,12 +1,10 @@
 <style>
-  .row{
-    place-content:center;
-  }
   h1{
     margin: 0 10px;
   }
   .row{
-    margin-top:2px;
+    margin-top:20px;
+    place-content:center;
   }
   .btn-floating{
     background-color: #008BA2;

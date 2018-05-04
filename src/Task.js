@@ -15,6 +15,9 @@ export default class Task{
 	switchUploaded(){
 		this.uploaded = true;
 	}
+	switchIsReassigned(){
+		this.isReassigned = true;
+	}
 	switchCanBeReviewed(){
 		this.canBeReviewed=true;
 	}

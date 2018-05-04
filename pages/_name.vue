@@ -1,5 +1,5 @@
 <style>
-	body, html{
+	body{
 		height:100%;
 		/*background-color: #EEE;*/
 		background: linear-gradient(#EFEFEF, #E1E1E1);
@@ -72,7 +72,7 @@
 		/*background-color: #eee;*/
 	}
 	.container{
-		max-width:100%;
+		/*max-width:100%;*/
 	}
 	.redIcon{
 		color:red;
@@ -91,12 +91,18 @@
 		<navbar></navbar>
 	    <currentDate></currentDate>
 		<div class="container">
+			<p>
+		      <label>
+		        <input v-model="hidePastTasks" type="checkbox" />
+		        <span>Hide Past Tasks</span>
+		      </label>
+		    </p>
 			<ul v-for="" class="collection with-header">
 		      <h4>{{params.name}}: Tasks</h4>
-		      <li v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
+		      <li v-if="!(hidePastTasks && task.isPastDeadline())" v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
 		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
 		        <span class="title"><strong>{{task.deadline}} </strong></span>
-		         <br /><span style="width:400px; word-wrap:break-word; display:inline-block;"> {{task.label}}</span>
+		         <br /><span style="width:600px; word-wrap:break-word; display:inline-block;"> {{task.label}}</span>
 		        
 		        <div class="secondary-content taskCheck">
 		        	<label>
@@ -118,7 +124,7 @@
 			              <input class="file-path validate" type="text">
 			            </div>
 			          </div>
-			          <button v-bind:disabled="!task.canBeUploaded" style="float:none;" @click="uploadFile(task)" class="btn niceBlue" type="submit" name="action">Submit
+			          <button v-bind:disabled="!task.canBeUploaded || task.isSlacked()" style="float:none;" @click="uploadFile(task)" class="btn niceBlue" type="submit" name="action">Submit
 			            <i class="material-icons right">send</i>
 			          </button>
 			      	</div>
@@ -175,6 +181,7 @@
 				params:this.$route.params,
 				members:members.members,
 				currentDateState: currentDateState,
+				hidePastTasks:false
 			}
 		},
 		mounted(){
@@ -182,24 +189,31 @@
 	    }, 
 	    methods:{
 	    	takeOver: function(task){
-	      		swal({
-					title: 'Are you sure?',
-					text: "You won't be able to revert this!",
-					type: 'warning',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Yes, give me this task!'
-				}).then((result) => {
-					if (result.value) {
-			    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label, false, task.minDaysNeeded, 4))
-				    	swal(
-				    		'OK!',
-				    		'This task has been assigned to you!',
-				    		'success'
-			    		)
-				  	}
-				})
+	    		if(task.isReassigned){
+	    			swal(members.members[0].name + ' already took over this task!')
+	    			return;
+	    		}else{
+
+	    			task.switchIsReassigned();
+		      		swal({
+						title: 'Are you sure?',
+						text: "You won't be able to revert this!",
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Yes, give me this task!'
+					}).then((result) => {
+						if (result.value) {
+				    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label, false, task.minDaysNeeded, 4))
+					    	swal(
+					    		'OK!',
+					    		'This task has been assigned to you!',
+					    		'success'
+				    		)
+					  	}
+					})
+				}
 	    	},
 	    	uploadFile: function(task){
 	    		task.switchUploaded();
