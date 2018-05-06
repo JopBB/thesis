@@ -213,16 +213,10 @@
 				}
 	    	},
 	    	uploadFile: function(task){
-	    		task.switchUploaded();
-	    		var reviewDate = this.setNewDate(task.deadline, 2);
+	    		task.switchUploaded();	    		
 	    		var membersList = members.members;
-	    		var taskMemberIndex;
 	    		var reviewName="Review \'" + task.label + "\' by " + this.$route.params.name;
-	    		var newReview = new ReviewTask(reviewDate, reviewName)
 	    		for (var i = 0; i < membersList.length; i++){
-					if(membersList[i].name===this.$route.params.name){
-						taskMemberIndex=i;
-					}
 					for(var j = 0; j<membersList[i].reviewTasks.length; j++){
 						if(membersList[i].reviewTasks[j].label===reviewName){
 							swal('This task is already uploaded!')
@@ -230,8 +224,16 @@
 						}
 					}
 				}
-				var reviewMemberIndex = this.getMemberIndexWithLeastTasks()
-				// console.log(membersList[reviewMemberIndex].name)
+	    		this.createNewReviewTask(task);
+	    	},
+	    	createNewReviewTask(task){
+	    		var membersList = members.members;
+	    		var reviewDate = this.setNewDate(task.deadline, 2);
+	    		var taskMemberIndex;
+	    		var reviewName="Review \'" + task.label + "\' by " + this.$route.params.name;
+	    		var newReview = new ReviewTask(reviewDate, reviewName)
+	    		var reviewMemberIndex = this.getMemberIndexWithLeastTasks()
+				console.log(membersList[reviewMemberIndex].name)
 				membersList[reviewMemberIndex].reviewTasks.push(newReview) 
 	    	},
 	    	getMemberIndexWithLeastTasks(){
@@ -240,7 +242,7 @@
 				    return (a.tasks.length+a.reviewTasks.length) > (b.tasks.length+b.reviewTasks.length)
 				});
 
-	    		if(sorted[0].name===this.$route.params.name){
+	    		if(sorted[0].name===this.$params.name){
 	    			return members.members.indexOf(sorted[1])
 	    		}else{
 	    			return members.members.indexOf(sorted[0])
@@ -295,6 +297,7 @@
 				  	task.review=result.value[0];
 				  	if(task.review==="bad"){
 				  		that.copyAfterBadReview(task);
+				  		that.createNewReviewTask(task)
 				  	}
 				    swal({
 				      title: 'All done!',
