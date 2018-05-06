@@ -52,21 +52,18 @@
         this.duplicateSlackedTasks();
         setTimeout(function(){
           $('.timeLineModal').modal();
-          console.log('now.')  
         }, 300);
         
       },
       checkForWarning(){
         var membersList = members.members
         for(var i=0; i<membersList.length; i++){
-          // console.log('memberWarnings ' + membersList[i].warnings[2] + ' ' + membersList[i].warnings[1] + ' ' + membersList[i].warnings[0])
           if(membersList[i].amountOfSlackingDone()>0 && membersList[i].warnings[0] === undefined){
 
             if(i===0){
               $('#warning1').modal('open');
             }
             membersList[i].warnings.push(new Warning(1, membersList[i].name, currentDateState.currentDate))
-            console.log('warningList' + membersList[i].warnings[0].owner + membersList[i].warnings)
             return;
           }
 
@@ -78,7 +75,6 @@
               $('#'+membersList[i].name).modal('open');
             }
             membersList[i].warnings.push(new Warning(2, membersList[i].name, currentDateState.currentDate))
-            console.log('warningList' + membersList[i].warnings[0].owner + membersList[i].warnings)
             return;
           }
 
@@ -90,7 +86,6 @@
               $('#'+membersList[i].name).modal('open');
             }
             membersList[i].warnings.push(new Warning(3, membersList[i].name, currentDateState.currentDate))
-            console.log('warningList' + membersList[i].warnings[0].owner + membersList[i].warnings)
             return;
           }
           
