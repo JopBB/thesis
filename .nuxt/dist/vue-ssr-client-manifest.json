@@ -2,28 +2,28 @@
   "publicPath": "/thesis/_nuxt/",
   "all": [
     "vendor.c8fcf00c13f5e057da99.js",
-    "pages/index.58aa4ad6d3bf99af8848.js",
-    "pages/_name.a42f5bf997a96297953e.js",
+    "pages/index.a38827cfd6778e3c6b9a.js",
+    "pages/_name.cb87c6cb12317073ca52.js",
     "pages/information.e93688b28db555d818f2.js",
     "layouts/default.79a97d5db75a3bd03fe0.js",
-    "pages/newTask.8394f7fe182aec1e7c3c.js",
+    "pages/newTask.11d83015b59a1708c6f6.js",
     "app.cd1655fa726fb74d81dc.js",
-    "manifest.70c836f360bad446a7d6.js",
+    "manifest.84152165bf929371105d.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.70c836f360bad446a7d6.js",
+    "manifest.84152165bf929371105d.js",
     "vendor.c8fcf00c13f5e057da99.js",
     "app.cd1655fa726fb74d81dc.js"
   ],
   "async": [
-    "pages/index.58aa4ad6d3bf99af8848.js",
-    "pages/_name.a42f5bf997a96297953e.js",
+    "pages/index.a38827cfd6778e3c6b9a.js",
+    "pages/_name.cb87c6cb12317073ca52.js",
     "pages/information.e93688b28db555d818f2.js",
     "layouts/default.79a97d5db75a3bd03fe0.js",
-    "pages/newTask.8394f7fe182aec1e7c3c.js"
+    "pages/newTask.11d83015b59a1708c6f6.js"
   ],
   "modules": {
     "16881362": [

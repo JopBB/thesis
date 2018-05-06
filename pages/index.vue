@@ -23,6 +23,8 @@
   }
   .timeline{
     height:60vh;
+    position: relative;
+    top:20px;
   }
   .flexed{
     display: flex;
@@ -67,8 +69,6 @@
   }
   .timelineWarnings{
     height:200px;
-    position: relative;
-    top:20px;
   }
   .btn-floating.btn-large.urgency1{
     background-color: green;
@@ -87,6 +87,8 @@
     <navbar></navbar>
     <currentDate></currentDate>
     <div class="container fullWidth">
+
+      <h3>Warnings</h3>
       <div class="timeline timelineWarnings flexed">
         <div class="timelineBlackline flexedWarnings">
           <button v-for="warning in sortedWarnings"  class="btn-floating btn-large orange timelineButton warningButton" >
@@ -95,6 +97,7 @@
         </div>     
       </div> 
 
+      <h3>Milestones</h3>
       <div class="timeline flexed">
         <div class="timelineBlackline flexed">
           <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
