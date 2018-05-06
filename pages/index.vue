@@ -56,8 +56,28 @@
   .modal{
     height:415px;
   }
-  .container{
-    max-width:100%;
+  .container.fullWidth{
+    max-width: 100%;  
+  }
+  .flexedWarnings{
+    display: flex;
+  }
+  .warningButton{
+    margin-right:5px;
+  }
+  .timelineWarnings{
+    height:200px;
+    position: relative;
+    top:20px;
+  }
+  .btn-floating.btn-large.urgency1{
+    background-color: green;
+  }
+  .btn-floating.btn-large.urgency2{
+    background-color: orange;
+  }
+  .btn-floating.btn-large.urgency3{
+    background-color: red;
   }
 </style>
 
@@ -66,29 +86,23 @@
   <div>
     <navbar></navbar>
     <currentDate></currentDate>
-    <div class="container">
-      <div class="timeline flexed valign-wrapper">
+    <div class="container fullWidth">
+      <div class="timeline timelineWarnings flexed">
+        <div class="timelineBlackline flexedWarnings">
+          <button v-for="warning in sortedWarnings"  class="btn-floating btn-large orange timelineButton warningButton" >
+            <span> {{warning.owner.substring(0,2)}}</span>
+          </button>
+        </div>     
+      </div> 
+
+      <div class="timeline flexed">
         <div class="timelineBlackline flexed">
-          <button v-for="date in sortedTaskDates" :class={finalDeadline:date.last} class="btn-floating btn-large red modal-trigger timelineButton" :data-target="date.deadline">
+          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
             <span :class={lastSpan:date.last}> {{date.deadline}}</span>
           </button>
         </div>     
       </div>
-
-      <div v-for="date in sortedTaskDates" class="modal" :id="date.deadline">
-        <div class="modal-header">
-          <h4>{{date.deadline}}<span :class="{invis:!date.last}">: Final deadline</span></h4> 
-        </div>
-        <div v-for="member in members" class="modal-content flexed">
-          <div>
-            {{member.name}} - {{percentageDone(date, member)}}
-            <nuxt-link style="float:right" :to="{path: member.name}"><i class="material-icons blackIcon">zoom_in</i></nuxt-link>
-          </div>
-          <div class="progress">
-            <div class="determinate" :style="{width:percentageDone(date, member)}"></div>
-          </div>
-        </div>
-      </div> 
+      <timelineModals></timelineModals>
     </div>
   </div>
   
@@ -102,10 +116,13 @@ import swal from 'sweetalert2';
 import members from '~/src/members.js';
 import navbar from '~/src/navbar.vue';
 import currentDate from '~/src/currentDate.vue';
+import timelineModals from '~/src/timelineModals.vue';
+
 export default {
   components:{
     navbar,
-    currentDate
+    currentDate,
+    timelineModals
   },
   head: {
     title: 'LiftOff',
@@ -126,32 +143,20 @@ export default {
       firstMember: members.members[0].tasks
     }
   },
-  methods:{
-    toggleTasks(date){
-      if($("[id="+"'"+date.deadline+"'"+"]").hasClass("invis")){
-        $("[id="+"'"+date.deadline+"'"+"]").removeClass("invis")  
-      }else{
-        $("[id="+"'"+date.deadline+"'"+"]").addClass("invis")  
-      }      
-    },
-    percentageDone(date, member){
-      var dateTasks = member.tasks.filter(task => task.deadline===date.deadline);
-      var doneDateTasks = dateTasks.filter(task => task.done()===true)
-      return dateTasks.length!==0 ? (doneDateTasks.length/dateTasks.length)*100 + "%" : "No tasks for this deadline";
-    }
-  },
   computed:{
     sortedTaskDates(){
       var membersList = members.members;
       var lookup = {};
       var result = [];
       for (var i = 0; i < membersList.length; i++){
+        var highestUrgency=0;
         for (var j = 0; j < membersList[i].tasks.length;j++) {
           var task = membersList[i].tasks[j];
+          var highestUrgency = membersList[i].tasks[j].version > highestUrgency ? membersList[i].tasks[j].version : highestUrgency;
           var deadline = task.deadline;
           if (!(deadline in lookup)) {
             lookup[deadline] = 1;
-            result.push({"deadline":deadline, "last":false});
+            result.push({"deadline":deadline, "last":false, "highestUrgency":highestUrgency});
           }
         } 
       }
@@ -161,6 +166,21 @@ export default {
         return newADate-newBDate;
       });
       result[result.length-1].last=true;
+      return result;
+    },
+    sortedWarnings(){
+      var membersList = members.members;
+      var result=[];
+      for(var i=0;i<membersList.length;i++){
+        for(var j=0; j<membersList[i].warnings.length;j++){
+          result.push(membersList[i].warnings[j]);
+        }
+      }
+      result.sort(function(a,b){
+        var newADate = new Date(a.date)
+        var newBDate = new Date(b.date)
+        return newADate-newBDate;
+      });
       return result;
     }
   }

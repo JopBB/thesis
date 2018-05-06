@@ -2,6 +2,7 @@
   .modal.warnings{
     bottom:auto;
     top:30%;
+    height:auto;
   }
 </style>
 
@@ -36,11 +37,29 @@
           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">I will do the right thing from now on</a>
         </div>
       </div> 
+
+      <div v-for="member in members" class="modal warnings" :id="member.name">
+        <div class="modal-content">
+          <h3 class="header">Warning</h3>
+            <p>{{member.name}} has not been completing their tasks for two times now and we thought you should know.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK, good to know!</a>
+        </div>
+      </div>
+
   </div>
 </template>
 
 <script>
+
+import members from '~/src/members.js';
   export default{
+    data(){
+      return{
+        members:members.members
+      }
+    },
     mounted(){
       $('.modal').modal();  
     }

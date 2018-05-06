@@ -1,12 +1,12 @@
 <style>
-	body{
+	body, html{
 		height:100%;
-		/*background-color: #EEE;*/
-		background: linear-gradient(#EFEFEF, #E1E1E1);
+		background-color: #EEE;
+		/*background: linear-gradient(#EFEFEF, #E1E1E1);*/
 	}
 	body{
-		overflow: hidden;
-		overflow-y: auto;
+		overflow: hidden !important;
+		overflow-y: auto !important;
 	}
 	.image-upload > .submitTheEvidence{
 		visibility:hidden;
@@ -70,9 +70,6 @@
 	}
 	.collection-item.greyBackground{
 		/*background-color: #eee;*/
-	}
-	.container{
-		/*max-width:100%;*/
 	}
 	.redIcon{
 		color:red;
@@ -205,7 +202,7 @@
 						confirmButtonText: 'Yes, give me this task!'
 					}).then((result) => {
 						if (result.value) {
-				    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label, false, task.minDaysNeeded, 4))
+				    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label + ' taken over from ' +this.$route.params.name , false, task.minDaysNeeded, 4))
 					    	swal(
 					    		'OK!',
 					    		'This task has been assigned to you!',

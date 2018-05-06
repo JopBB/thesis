@@ -20,7 +20,7 @@
     <div class="row">
       <button @click="previousDay()" class="btn-floating"><i class="material-icons">chevron_left</i></button>
       <h1>{{currentDateState.currentDateString()}}</h1>
-      <button @click="nextDay()" class="btn-floating"> <i class="material-icons">chevron_right</i></button>
+      <button @click="nextDay()" class="btn-floating nextDayButton"> <i class="material-icons">chevron_right</i></button>
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@
   import members from '~/src/members.js';
   import Task from '~/src/Task.js';
   import warnings from '~/src/warnings.vue';
+  import Warning from '~/src/Warning.js';
   export default{
     components:{
       warnings
@@ -38,38 +39,62 @@
       return{
         currentDateState:currentDateState,
         members: members.members,
-        seen1:false,
-        seen2:false,
-        seen3:false
+        Warning: Warning
       }
     },
     methods:{
       previousDay(){
         currentDateState.previousDay();
-        this.checkForWarning();
-        this.duplicateSlackedTasks();
       },
       nextDay(){
         currentDateState.nextDay();
         this.checkForWarning();
         this.duplicateSlackedTasks();
+        setTimeout(function(){
+          $('.timeLineModal').modal();
+          console.log('now.')  
+        }, 300);
+        
       },
       checkForWarning(){
-        var membersList = members.members;
-        if(membersList[0].amountOfSlackingDone()>4 && this.seen3 === false){
-          $('#warning3').modal('open');  
-          this.seen3=true;
-          return;
-        }
-        if(membersList[0].amountOfSlackingDone()>2  && this.seen2===false){
-          $('#warning2').modal('open');
-          this.seen2=true;
-          return;  
-        }
-        if(membersList[0].amountOfSlackingDone()>0 && this.seen1===false){
-          $('#warning1').modal('open');
-          this.seen1=true;
-          return;  
+        var membersList = members.members
+        for(var i=0; i<membersList.length; i++){
+          // console.log('memberWarnings ' + membersList[i].warnings[2] + ' ' + membersList[i].warnings[1] + ' ' + membersList[i].warnings[0])
+          if(membersList[i].amountOfSlackingDone()>0 && membersList[i].warnings[0] === undefined){
+
+            if(i===0){
+              $('#warning1').modal('open');
+            }
+            membersList[i].warnings.push(new Warning(1, membersList[i].name, currentDateState.currentDate))
+            console.log('warningList' + membersList[i].warnings[0].owner + membersList[i].warnings)
+            return;
+          }
+
+          if(membersList[i].amountOfSlackingDone()>2 && membersList[i].warnings[1] === undefined){
+            if(i===0){
+              $('#warning2').modal('open');
+            }
+            if(i!==0){
+              $('#'+membersList[i].name).modal('open');
+            }
+            membersList[i].warnings.push(new Warning(2, membersList[i].name, currentDateState.currentDate))
+            console.log('warningList' + membersList[i].warnings[0].owner + membersList[i].warnings)
+            return;
+          }
+
+          if(membersList[i].amountOfSlackingDone()>4 && membersList[i].warnings[2] === undefined){
+            if(i===0){
+              $('#warning3').modal('open');
+            }
+            if(i!==0){
+              $('#'+membersList[i].name).modal('open');
+            }
+            membersList[i].warnings.push(new Warning(3, membersList[i].name, currentDateState.currentDate))
+            console.log('warningList' + membersList[i].warnings[0].owner + membersList[i].warnings)
+            return;
+          }
+          
+          
         }
       },
       duplicateSlackedTasks(){

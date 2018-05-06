@@ -3,6 +3,7 @@ export default class Person{
 		this.name = name;
 		this.tasks=tasks;
 		this.reviewTasks = reviewTasks;
+		this.warnings=[];
 	}
 	amountOfSlackingDone(){
 		var result=0;
