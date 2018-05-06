@@ -48,7 +48,7 @@
     background:black;
   }
   .timelineButton{
-    top:-4vh;
+    top:-27px;
     font-size: 9pt;
   }
   .lastSpan{
