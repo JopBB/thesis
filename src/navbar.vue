@@ -21,7 +21,8 @@
     </ul>
     <nav class="nav-extended">
       <div class="nav-content">
-        <span class="nav-title">Some sort of project</span>
+        <a href="#" class="brand-logo center"><img width="130px" style="padding-left:50px;padding-top:5px;" src="rocket.png" /></a>
+        <span class="nav-title">LiftOff</span>
       </div>
       <div class="nav-wrapper">
         <ul class="">

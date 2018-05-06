@@ -21,11 +21,6 @@
   .btn-floating{
 
   }
-  .timeline{
-    height:60vh;
-    position: relative;
-    top:20px;
-  }
   .flexed{
     display: flex;
     justify-content: space-between;
@@ -67,8 +62,10 @@
   .warningButton{
     margin-right:5px;
   }
-  .timelineWarnings{
-    height:200px;
+  .timelineWarnings, .timeline{
+    height:130px;
+    position: relative;
+    top:20px;
   }
   .btn-floating.btn-large.urgency1{
     background-color: green;
@@ -88,6 +85,16 @@
     <currentDate></currentDate>
     <div class="container fullWidth">
 
+      
+      <h3>Milestones</h3>
+      <div class="timeline flexed">
+        <div class="timelineBlackline flexed">
+          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
+            <span :class={lastSpan:date.last}> {{date.deadline}}</span>
+          </button>
+        </div>     
+      </div>
+
       <h3>Warnings</h3>
       <div class="timeline timelineWarnings flexed">
         <div class="timelineBlackline flexedWarnings">
@@ -97,14 +104,7 @@
         </div>     
       </div> 
 
-      <h3>Milestones</h3>
-      <div class="timeline flexed">
-        <div class="timelineBlackline flexed">
-          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
-            <span :class={lastSpan:date.last}> {{date.deadline}}</span>
-          </button>
-        </div>     
-      </div>
+
       <timelineModals></timelineModals>
     </div>
   </div>
