@@ -135,7 +135,7 @@
           }
           var reviewDate = this.setNewDate(task.deadline, 2);
           var taskMemberIndex;
-          var reviewName="Review \'" + task.label + "\' by " + this.$route.params.name;
+          var reviewName="Review \'" + task.label + "\' by " + name;
           var newReview = new ReviewTask(reviewDate, reviewName)
           var reviewMemberIndex = this.getMemberIndexWithLeastTasks(name)
         console.log(membersList[reviewMemberIndex].name)
