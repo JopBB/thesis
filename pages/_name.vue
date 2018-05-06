@@ -91,7 +91,7 @@
 			<p>
 		      <label>
 		        <input v-model="hidePastTasks" type="checkbox" />
-		        <span>Hide Past Tasks</span>
+		        <span>Hide Past Tasks and Reviews</span>
 		      </label>
 		    </p>
 			<ul v-for="" class="collection with-header">
@@ -134,7 +134,7 @@
 		        
 		      </li>
 		      <h4>{{params.name}}: Reviews</h4>
-		      <li v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
+		      <li v-if="!(hidePastTasks && reviewTask.isPastDeadline())" v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
 		      	<strong>{{reviewTask.deadline}} </strong> - {{reviewTask.label}}
 		      	<div class="secondary-content">
 		        	<label>
