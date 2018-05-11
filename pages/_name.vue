@@ -36,13 +36,13 @@
 		margin-top:-5px;
 	}
 	.taskDone{
-		background-color: #C5FFCB !important;
+		background-color: hsl(126, 100%, 50%) !important;
 	}
 	.taskNotDone{
 		background-color: #FFC5C5 !important;
 	}
 	.taskUploaded{
-		background-color: #FFEBC5 !important;
+		background-color: hsl(126, 100%, 90%) !important;
 	}
 	.niceBlue{
 		background-color: #008BA2;
@@ -88,6 +88,7 @@
 		<navbar></navbar>
 	    <currentDate></currentDate>
 		<div class="container">
+	    	<h2>{{params.name}}</h2>
 			<p>
 		      <label>
 		        <input v-model="hidePastTasks" type="checkbox" />
@@ -95,7 +96,7 @@
 		      </label>
 		    </p>
 			<ul v-for="" class="collection with-header">
-			<h4>{{params.name}}: Reviews</h4>
+			<h4>Reviews</h4>
 		      <li v-if="!(hidePastTasks && reviewTask.isPastDeadline())" v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
 		      	<strong>{{reviewTask.deadline}} </strong> - {{reviewTask.label}}
 		      	<div class="secondary-content">
@@ -106,8 +107,8 @@
 		        </div>
 		      </li>
 
-		      <h4>{{params.name}}: Tasks</h4>
-		      <li v-if="!(hidePastTasks && task.isPastDeadline())" v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
+		      <h4 style="margin-top:30px;">Tasks</h4>
+		      <li v-if="!(hidePastTasks && task.isPastDeadline())" v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed()}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
 		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
 		        <span class="title"><strong>{{task.deadline}} </strong></span>
 		         <br /><span style="width:600px; word-wrap:break-word; display:inline-block;"> {{task.label}}</span>
