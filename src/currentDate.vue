@@ -51,10 +51,26 @@
         currentDateState.nextDay();
         this.checkForWarning();
         this.duplicateSlackedTasks();
+        //FOR TESTING PURPOSES!
+          this.reviewAllReviews();
+        //END
         setTimeout(function(){
           $('.timeLineModal').modal();
         }, 300);
         
+      },
+      reviewAllReviews(){
+        var membersList = members.members
+        for(var i=1; i<membersList.length; i++){
+          for(var j=0; j<membersList[i].reviewTasks.length;j++){
+            membersList[i].reviewTasks[j].setDone();
+          }
+        }
+        for(var q=0; q<membersList[0].tasks.length;q++){
+          if(membersList[0].tasks[q].uploaded===true){
+            membersList[0].tasks[q].review="good"
+          }
+        }
       },
       checkForWarning(){
         var membersList = members.members
@@ -72,19 +88,19 @@
             if(i===0){
               $('#warning2').modal('open');
             }
-            if(i!==0){
+            if(i!==0 && !members.participantIsSlacker){
               $('#'+membersList[i].name).modal('open');
             }
             membersList[i].warnings.push(new Warning(2, membersList[i].name, currentDateState.currentDate))
             return;
           }
 
-          if(membersList[i].amountOfSlackingDone()>4 && membersList[i].warnings[2] === undefined){
+          if(membersList[i].amountOfSlackingDone()>3 && membersList[i].warnings[2] === undefined){
             if(i===0){
               $('#warning3').modal('open');
             }
-            if(i!==0){
-              $('#'+membersList[i].name).modal('open');
+            if(i!==0 && !members.participantIsSlacker){
+              $('#'+membersList[i].name+'2').modal('open');
             }
             membersList[i].warnings.push(new Warning(3, membersList[i].name, currentDateState.currentDate))
             return;
@@ -103,7 +119,7 @@
               if(!oldTask.oldTask){
                 oldTask.oldTask=true;
                 if(oldTask.version===1){
-                  var newTask = new Task(newDeadline, oldTask.label + ' retry after not uploaded', false, oldTask.minDaysNeeded, 2)
+                  var newTask = new Task(newDeadline, oldTask.label + ', - retry after task not completed', false, oldTask.minDaysNeeded, 2)
                   membersList[i].tasks.push(newTask)
                   // this.createNewReviewTask(newTask)
                 }

@@ -54,6 +54,9 @@
   .modal{
     height:415px;
   }
+  .modal .modal-content{
+    padding:10px;
+  }
   .container.fullWidth{
     max-width: 100%;  
   }
@@ -67,7 +70,7 @@
   .timelineWarnings, .timeline{
     height:130px;
     position: relative;
-    top:20px;
+    top:29px;
   }
   .btn-floating.btn-large.urgency1{
     background-color: hsl(126, 100%, 90%)
@@ -117,6 +120,16 @@
   .urgency3.amountCompleted4{
     background-color: hsl(0,100%,50%) !important;
   }
+  .chip{
+    position: relative;
+    top:-50px;
+    left:70px;
+    z-index: 1000;
+    background-color: red;
+    color:white;
+    padding:0 5px;
+    height:30px;
+  }
 </style>
 
 
@@ -130,18 +143,26 @@
       <h3>Milestones</h3>
       <div class="timeline flexed">
         <div class="timelineBlackline flexed">
-          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3},{amountCompleted1: percentageDone(date)>=25 && percentageDone(date)<50},{amountCompleted2: percentageDone(date)>=50 && percentageDone(date)<75},{amountCompleted3: percentageDone(date)>=75 && percentageDone(date)<100},{amountCompleted4: percentageDone(date)===100}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
+            <div v-for="date in sortedTaskDates">
+            <div class="chip">
+                {{percentageDone(date)}}%
+            </div>
+
+          <button :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency>=3},{amountCompleted1: percentageDone(date)>=25 && percentageDone(date)<50},{amountCompleted2: percentageDone(date)>=50 && percentageDone(date)<75},{amountCompleted3: percentageDone(date)>=75 && percentageDone(date)<100},{amountCompleted4: percentageDone(date)===100}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
             <span :class={lastSpan:date.last}> {{date.deadline}}</span>
           </button>
+        </div>
         </div>     
       </div>
 
       <h3>Warnings</h3>
       <div class="timeline timelineWarnings flexed">
         <div class="timelineBlackline flexedWarnings">
-          <button v-for="warning in sortedWarnings"  class="btn-floating btn-large timelineButton warningButton" >
-            <span> {{warning.owner.substring(0,2)}}</span>
-          </button>
+          <nuxt-link v-for="warning in sortedWarnings" :to="{path: warning.owner}">
+            <button class="btn-floating btn-large timelineButton warningButton" >
+              <span style="height:10px"> {{warning.owner.substring(0,2)}}</span>
+            </button>
+          </nuxt-link>
         </div>     
       </div> 
 

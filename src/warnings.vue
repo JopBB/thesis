@@ -48,6 +48,16 @@
         </div>
       </div>
 
+      <div v-for="member in members" class="modal warnings" :id="member.name + '2'">
+        <div class="modal-content">
+          <h3 class="header">Warning</h3>
+            <p>{{member.name}} has not been completing their tasks a bunch of times now and we thought you should know that the lecturer has been contacted about this.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK, good to know!</a>
+        </div>
+      </div>
+
   </div>
 </template>
 

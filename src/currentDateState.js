@@ -1,5 +1,5 @@
 export default{
-  currentDate: new Date(Date.now()),
+  currentDate: new Date('1 june 2018 21:00'),
   nextDay(){
     var newDate = new Date(this.currentDate);
     newDate.setDate(this.currentDate.getDate() + 1);

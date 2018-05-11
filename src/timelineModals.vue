@@ -14,21 +14,21 @@
   <div>
     <div v-for="date in sortedTaskDates" class="modal timeLineModal" :id="date.deadline">
       <div class="modal-header" :class="[{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3}]">
-        <h4>{{date.deadline}}<span :class="{invis:!date.last}">: Final deadline</span></h4> 
-        <h5>
+        <h4>{{date.deadline}}</h4>-{{percentageDone(date)}}% of tasks done <h5><span :class="{invis:!date.last}">: Final deadline</span></h5> 
+        <h6>
           <span v-if="date.highestUrgency===1"></span>
           <span v-if="date.highestUrgency===2">There are urgent tasks due today!</span>
           <span v-if="date.highestUrgency===3">There are very urgent tasks due today!</span>
           <span v-if="date.highestUrgency===4">There are very urgent tasks due today!!!</span>
-        </h5>
+        </h6>
       </div>
       <div v-for="member in members" class="modal-content flexed">
         <div>
-          {{member.name}} - {{percentageDone(date, member)}}
+          <b>{{member.name}}</b>   - {{percentageDonePerMember(date, member)}}
           <nuxt-link style="float:right" :to="{path: member.name}"><i class="material-icons blackIcon">search</i></nuxt-link>
         </div>
         <div class="progress">
-          <div class="determinate" :style="{width:percentageDone(date, member)}"></div>
+          <div class="determinate" :style="{width:percentageDonePerMember(date, member)}"></div>
         </div>
       </div>
     </div>
@@ -74,10 +74,22 @@ import members from '~/src/members.js';
       }
     },
     methods:{
-      percentageDone(date, member){
+      percentageDonePerMember(date, member){
         var dateTasks = member.tasks.filter(task => task.deadline===date.deadline);
         var doneDateTasks = dateTasks.filter(task => task.done()===true)
         return dateTasks.length!==0 ? (doneDateTasks.length/dateTasks.length)*100 + "%" : "No tasks for this deadline";
+      },
+      percentageDone(date){
+        var membersList = members.members;
+        var totalAmountDone=0;
+        var totalAmount=0;
+        for(var i=0; i<membersList.length;i++){
+          var dateTasks = membersList[i].tasks.filter(task => task.deadline===date.deadline);
+          var doneDateTasks = dateTasks.filter(task => task.done()===true)
+          totalAmount+=dateTasks.length;
+          totalAmountDone+=doneDateTasks.length
+        }
+        return (totalAmountDone/totalAmount)*100;
       }
     }
   }

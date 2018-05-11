@@ -8,6 +8,9 @@ export default class ReviewTask{
 	switchDone(){
 		this.done = !this.done;
 	}
+	setDone(){
+		this.done=true;
+	}
 	isPastDeadline(){
 		 return new Date(this.deadline + ' 2018 23:00') < currentDateState.currentDate;
 	}

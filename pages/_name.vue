@@ -20,7 +20,7 @@
 		color:black;
 		border: 1px solid black;
 		border-radius:5px;
-		background-color: #26a69a;
+		<!-- background-color: #26a69a; -->
 		margin-top:-2px;
 	}
 	.blackIcon:hover{
@@ -117,6 +117,12 @@
 		        	<label>
 	       				<input v-bind:checked="task.uploaded" type="checkbox" class="filled-in" disabled="disabled" />
 	   					<span>Uploaded</span>
+	      			</label>
+		        </div>
+		        <div class="secondary-content taskCheck">
+		        	<label>
+	       				<input v-bind:checked="task.reviewed()" type="checkbox" class="filled-in" disabled="disabled" />
+	   					<span>reviewed</span>
 	      			</label>
 		        </div>
 		        <div class="secondary-content taskCheck">
