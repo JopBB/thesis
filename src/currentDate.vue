@@ -105,12 +105,12 @@
                 if(oldTask.version===1){
                   var newTask = new Task(newDeadline, oldTask.label + ' retry after not uploaded', false, oldTask.minDaysNeeded, 2)
                   membersList[i].tasks.push(newTask)
-                  this.createNewReviewTask(newTask)
+                  // this.createNewReviewTask(newTask)
                 }
                 if(oldTask.version===2){
                   var newTask = new Task(newDeadline, oldTask.label + ' 2 times', false, oldTask.minDaysNeeded, 3)
                   membersList[i].tasks.push(newTask)
-                  this.createNewReviewTask(newTask)
+                  // this.createNewReviewTask(newTask)
                 }
 
               }

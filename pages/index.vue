@@ -130,7 +130,7 @@
       <h3>Milestones</h3>
       <div class="timeline flexed">
         <div class="timelineBlackline flexed">
-          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3},{amountCompleted1: percentageDone(date)>=25},{amountCompleted2: percentageDone(date)>=50},{amountCompleted3: percentageDone(date)>=75},{amountCompleted4: percentageDone(date)===100}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
+          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3},{amountCompleted1: percentageDone(date)>=25 && percentageDone(date)<50},{amountCompleted2: percentageDone(date)>=50 && percentageDone(date)<75},{amountCompleted3: percentageDone(date)>=75 && percentageDone(date)<100},{amountCompleted4: percentageDone(date)===100}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
             <span :class={lastSpan:date.last}> {{date.deadline}}</span>
           </button>
         </div>     
@@ -198,7 +198,6 @@ export default {
         totalAmount+=dateTasks.length;
         totalAmountDone+=doneDateTasks.length
       }
-      console.log(totalAmountDone + ' ' + totalAmount)
       return (totalAmountDone/totalAmount)*100;
     }
   },

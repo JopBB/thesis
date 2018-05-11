@@ -95,6 +95,17 @@
 		      </label>
 		    </p>
 			<ul v-for="" class="collection with-header">
+			<h4>{{params.name}}: Reviews</h4>
+		      <li v-if="!(hidePastTasks && reviewTask.isPastDeadline())" v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
+		      	<strong>{{reviewTask.deadline}} </strong> - {{reviewTask.label}}
+		      	<div class="secondary-content">
+		        	<label>
+	       				<input v-model="reviewTask.done" type="checkbox" class="filled-in" v-bind:disabled="findWithAttr(members, 'name', params.name)!==0" />
+	   					<span>Done</span>
+	      			</label>
+		        </div>
+		      </li>
+
 		      <h4>{{params.name}}: Tasks</h4>
 		      <li v-if="!(hidePastTasks && task.isPastDeadline())" v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
 		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
@@ -132,16 +143,6 @@
 		        		<button style="float:none;" @click="takeOver(task)" class="btn-small">take over</button>
 		        	</div>
 		        
-		      </li>
-		      <h4>{{params.name}}: Reviews</h4>
-		      <li v-if="!(hidePastTasks && reviewTask.isPastDeadline())" v-for="reviewTask in memberReviewTasks" v-bind:class="[{taskDone:reviewTask.done}, {taskNotDone:reviewTask.isSlacked()}]" class="collection-item greyBackground">
-		      	<strong>{{reviewTask.deadline}} </strong> - {{reviewTask.label}}
-		      	<div class="secondary-content">
-		        	<label>
-	       				<input v-model="reviewTask.done" type="checkbox" class="filled-in" v-bind:disabled="findWithAttr(members, 'name', params.name)!==0" />
-	   					<span>Done</span>
-	      			</label>
-		        </div>
 		      </li>
 		    </ul>
 		</div>
@@ -232,20 +233,22 @@
 	    		var taskMemberIndex;
 	    		var reviewName="Review \'" + task.label + "\' by " + this.$route.params.name;
 	    		var newReview = new ReviewTask(reviewDate, reviewName)
-	    		var reviewMemberIndex = this.getMemberIndexWithLeastTasks()
-				console.log(membersList[reviewMemberIndex].name)
-				membersList[reviewMemberIndex].reviewTasks.push(newReview) 
+	    		var reviewMemberIndexes = this.getMemberIndexesWithLeastTasks()
+				console.log(membersList[reviewMemberIndexes[0]].name + ' ' + membersList[reviewMemberIndexes[1]].name )
+				membersList[reviewMemberIndexes[0]].reviewTasks.push(newReview) 
+				membersList[reviewMemberIndexes[1]].reviewTasks.push(newReview) 
 	    	},
-	    	getMemberIndexWithLeastTasks(){
+	    	getMemberIndexesWithLeastTasks(){
 	    		var membersList = members.members;
 				var sorted = membersList.slice(0).sort(function(a,b){
 				    return (a.tasks.length+a.reviewTasks.length) > (b.tasks.length+b.reviewTasks.length)
 				});
-
-	    		if(sorted[0].name===this.$params.name){
-	    			return members.members.indexOf(sorted[1])
+	    		if(sorted[0].name===this.$route.params.name){
+	    			return [members.members.indexOf(sorted[1]),members.members.indexOf(sorted[2])]
+	    		}else if(sorted[1].name===this.$route.params.name){
+	    			return [members.members.indexOf(sorted[0]),members.members.indexOf(sorted[2])]
 	    		}else{
-	    			return members.members.indexOf(sorted[0])
+	    			return [members.members.indexOf(sorted[0]),members.members.indexOf(sorted[1])]
 	    		}
 	    	},
     		getRandomWithOneExclusion(indexToExclude){
@@ -297,7 +300,6 @@
 				  	task.review=result.value[0];
 				  	if(task.review==="bad"){
 				  		that.copyAfterBadReview(task);
-				  		that.createNewReviewTask(task)
 				  	}
 				    swal({
 				      title: 'All done!',

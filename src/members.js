@@ -14,8 +14,8 @@ export default{
 			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write Related Work section 3 and 4\' by Denny")
 			]),
 		new Person("Lisa", [
-			new Task(new Date('5 june 2018 21:00'),"Write introduction of paper", false, 1, 1),
-			new Task(new Date('5 june 2018 21:00'),"Write part 1 of methods of paper", false, 2, 1),
+			new Task(new Date('5 june 2018 21:00'),"Write introduction of paper", true, 1, 1),
+			new Task(new Date('5 june 2018 21:00'),"Write part 1 of methods of paper", true, 2, 1),
 			new Task(new Date('19 june 2018 21:00'),"Write part 2 and 3 of methods of paper", false, 1, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 2, 1)
 			],[
