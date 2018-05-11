@@ -45,6 +45,7 @@
   .timelineButton{
     top:-27px;
     font-size: 9pt;
+    color:#121212;
   }
   .lastSpan{
     top:-4px;
@@ -59,8 +60,9 @@
   .flexedWarnings{
     display: flex;
   }
-  .warningButton{
+  .btn-floating.warningButton{
     margin-right:5px;
+    background-color: #FFDC99;
   }
   .timelineWarnings, .timeline{
     height:130px;
@@ -68,13 +70,52 @@
     top:20px;
   }
   .btn-floating.btn-large.urgency1{
-    background-color: green;
+    background-color: hsl(126, 100%, 90%)
   }
   .btn-floating.btn-large.urgency2{
-    background-color: orange;
+    background-color: hsl(39, 100%, 90%)
   }
   .btn-floating.btn-large.urgency3{
-    background-color: red;
+    background-color: hsl(0,100%,90%)
+  }
+
+  .urgency1.amountCompleted1{
+    background-color: hsl(126, 100%, 75%) !important;
+  }
+  .urgency1.amountCompleted2{
+    background-color: hsl(126, 100%, 60%) !important;
+  }
+  .urgency1.amountCompleted3{
+    background-color: hsl(126, 100%, 40%) !important;
+  }
+  .urgency1.amountCompleted4{
+    background-color: hsl(126, 100%, 30%) !important;
+  }
+
+  .urgency2.amountCompleted1{
+    background-color: hsl(39, 100%, 80%) !important;
+  }
+  .urgency2.amountCompleted2{
+    background-color: hsl(39, 100%, 70%) !important;
+  }
+  .urgency2.amountCompleted3{
+    background-color: hsl(39, 100%, 60%) !important; 
+  }
+  .urgency2.amountCompleted4{
+    background-color: hsl(39, 100%, 50%) !important;
+  }
+
+  .urgency3.amountCompleted1{
+    background-color: hsl(0,100%,80%) !important;
+  }
+  .urgency3.amountCompleted2{
+    background-color: hsl(0,100%,70%) !important;
+  }
+  .urgency3.amountCompleted3{
+    background-color: hsl(0,100%,60%) !important;
+  }
+  .urgency3.amountCompleted4{
+    background-color: hsl(0,100%,50%) !important;
   }
 </style>
 
@@ -89,7 +130,7 @@
       <h3>Milestones</h3>
       <div class="timeline flexed">
         <div class="timelineBlackline flexed">
-          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
+          <button v-for="date in sortedTaskDates" :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency===3},{amountCompleted1: percentageDone(date)>=25},{amountCompleted2: percentageDone(date)>=50},{amountCompleted3: percentageDone(date)>=75},{amountCompleted4: percentageDone(date)===100}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
             <span :class={lastSpan:date.last}> {{date.deadline}}</span>
           </button>
         </div>     
@@ -98,7 +139,7 @@
       <h3>Warnings</h3>
       <div class="timeline timelineWarnings flexed">
         <div class="timelineBlackline flexedWarnings">
-          <button v-for="warning in sortedWarnings"  class="btn-floating btn-large orange timelineButton warningButton" >
+          <button v-for="warning in sortedWarnings"  class="btn-floating btn-large timelineButton warningButton" >
             <span> {{warning.owner.substring(0,2)}}</span>
           </button>
         </div>     
@@ -144,6 +185,21 @@ export default {
     return{
       members: members.members,
       firstMember: members.members[0].tasks
+    }
+  },
+  methods :{
+    percentageDone(date){
+      var membersList = members.members;
+      var totalAmountDone=0;
+      var totalAmount=0;
+      for(var i=0; i<membersList.length;i++){
+        var dateTasks = membersList[i].tasks.filter(task => task.deadline===date.deadline);
+        var doneDateTasks = dateTasks.filter(task => task.done()===true)
+        totalAmount+=dateTasks.length;
+        totalAmountDone+=doneDateTasks.length
+      }
+      console.log(totalAmountDone + ' ' + totalAmount)
+      return (totalAmountDone/totalAmount)*100;
     }
   },
   computed:{
