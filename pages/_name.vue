@@ -336,7 +336,7 @@
 			deleteTask(task){
 				swal({
 					title: 'Are you sure?',
-					text: "You won't be able to revert this!",
+					text: "You won't be able to revert this! Also, all of the group members will get a notification that this task has been deleted by you.",
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',

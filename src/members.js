@@ -8,7 +8,7 @@ export default{
 	members:[
 		new Person("Participant", [
 			new Task(new Date('5 june 2018 21:00' ),"Write code for location-module", false, 2, 1),
-			new Task(new Date('5 june 2018 21:00'),"Read and write about paper by Jackson", false, 2, 1),
+			new Task(new Date('5 june 2018 21:00'),"Read and write about paper by Jackson from 1998, see Mendeley", false, 2, 1),
 			new Task(new Date('12 june 2018 21:00' ),"Write code for Route-generator", false, 4, 1),
 			new Task(new Date('12 june 2018 21:00' ),"Finish up the location-module", false, 4, 1),
 			new Task(new Date('24 june 2018 21:00'),"Finish prototype", false, 3, 1),
