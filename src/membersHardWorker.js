@@ -7,11 +7,9 @@ export default{
 	participantIsSlacker:false,
 	members:[
 		new Person("Participant", [
-			new Task(new Date('5 june 2018 21:00' ),"Write code for location-module", false, 2, 1),
-			new Task(new Date('5 june 2018 21:00'),"Read and write about paper by Jackson", false, 2, 1),
-			new Task(new Date('12 june 2018 21:00' ),"Write code for Route-generator", false, 4, 1),
-			new Task(new Date('12 june 2018 21:00' ),"Finish up the location-module", false, 4, 1),
-			new Task(new Date('20 june 2018 21:00'),"Finish prototype", false, 3, 1),
+			new Task(new Date('5 june 2018 21:00' ),"Write chapter 1", false, 2, 1),
+			new Task(new Date('12 june 2018 21:00' ),"Write chapter 2", false, 4, 1),
+			new Task(new Date('20 june 2018 21:00'),"Write chapter 3", false, 3, 1),
 			new Task(new Date('29 june 2018 21:00'),"Write conclusion and abstract for paper", false, 2, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 4, 1)
 			],[

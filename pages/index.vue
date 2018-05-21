@@ -72,17 +72,22 @@
     position: relative;
     top:29px;
   }
-  .btn-floating.btn-large.urgency1{
-    background-color: hsl(126, 100%, 90%)
-  }
-  .btn-floating.btn-large.urgency2{
-    background-color: hsl(39, 100%, 90%)
-  }
-  .btn-floating.btn-large.urgency3{
-    background-color: hsl(0,100%,90%)
-  }
+  .btn-floating.btn-large{
+    background-color: #EEE;
+    /*background-color: hsl(126, 100%, 75%)*/
 
-  .urgency1.amountCompleted1{
+  }
+  .show{
+    display:inline-block !important;
+  }
+  .chip.chipRight{
+    display: none;
+    left:60px;
+  }
+  .amountCompleted4{
+    background-color: hsl(126, 100%, 50%) !important; 
+  }
+ /* .urgency1.amountCompleted1{
     background-color: hsl(126, 100%, 75%) !important;
   }
   .urgency1.amountCompleted2{
@@ -119,11 +124,11 @@
   }
   .urgency3.amountCompleted4{
     background-color: hsl(0,100%,50%) !important;
-  }
+  }*/
   .chip{
     position: relative;
     top:-50px;
-    left:70px;
+    left:50px;
     z-index: 1000;
     background-color: red;
     color:white;
@@ -144,9 +149,13 @@
       <div class="timeline flexed">
         <div class="timelineBlackline flexed">
             <div v-for="date in sortedTaskDates">
-            <div class="chip">
-                {{percentageDone(date)}}%
-            </div>
+              <div class="chip">
+                  {{percentageDone(date)}}%
+              </div>
+
+              <div :class="{show: date.highestUrgency>1}" class="chip chipRight">
+                  {{amountOfExclamations(date.highestUrgency)}} {{date.highestUrgency}}
+              </div>
 
           <button :class="[{finalDeadline:date.last},{urgency1: date.highestUrgency===1},{urgency2: date.highestUrgency===2},{urgency3: date.highestUrgency>=3},{amountCompleted1: percentageDone(date)>=25 && percentageDone(date)<50},{amountCompleted2: percentageDone(date)>=50 && percentageDone(date)<75},{amountCompleted3: percentageDone(date)>=75 && percentageDone(date)<100},{amountCompleted4: percentageDone(date)===100}]" class="btn-floating btn-large modal-trigger timelineButton" :data-target="date.deadline">
             <span :class={lastSpan:date.last}> {{date.deadline}}</span>
@@ -156,7 +165,13 @@
       </div>
 
       <h3>Warnings</h3>
-      <div class="timeline timelineWarnings flexed">
+      <div class="flexed">
+        <div v-for="member in members">
+          <nuxt-link :to="{path: member.name}">{{member.name}}</nuxt-link> : {{member.warnings.length}} warnings
+        </div>
+      </div>
+
+      <!-- <div class="timeline timelineWarnings flexed">
         <div class="timelineBlackline flexedWarnings">
           <nuxt-link v-for="warning in sortedWarnings" :to="{path: warning.owner}">
             <button class="btn-floating btn-large timelineButton warningButton" >
@@ -164,7 +179,7 @@
             </button>
           </nuxt-link>
         </div>     
-      </div> 
+      </div>  -->
 
 
       <timelineModals></timelineModals>
@@ -209,6 +224,16 @@ export default {
     }
   },
   methods :{
+    amountOfExclamations(amount){
+      var amountReturned='';
+      for(amount;amount>1; amount--){
+        console.log('asdfasdf')
+        amountReturned = amountReturned.concat('!')
+        console.log(amountReturned + 'inLoop')
+      }
+      console.log(amountReturned)
+      return amountReturned;
+    },
     percentageDone(date){
       var membersList = members.members;
       var totalAmountDone=0;
@@ -227,17 +252,30 @@ export default {
       var membersList = members.members;
       var lookup = {};
       var result = [];
+      var urgencies = {};
+
       for (var i = 0; i < membersList.length; i++){
-        var highestUrgency=0;
         for (var j = 0; j < membersList[i].tasks.length;j++) {
           var task = membersList[i].tasks[j];
-          var highestUrgency = membersList[i].tasks[j].version > highestUrgency ? membersList[i].tasks[j].version : highestUrgency;
+          
           var deadline = task.deadline;
+          if(!(deadline in urgencies)){
+            urgencies[deadline] = task.version;
+          }else{
+            if(urgencies[deadline]<task.version){
+              urgencies[deadline] = task.version
+            }
+          }
+
           if (!(deadline in lookup)) {
             lookup[deadline] = 1;
-            result.push({"deadline":deadline, "last":false, "highestUrgency":highestUrgency});
+            result.push({"deadline":deadline, "last":false, "highestUrgency":0});
           }
         } 
+      }
+      for(var i=0; i<result.length;i++){
+        var deadline=result[i].deadline;
+        result[i].highestUrgency=urgencies[deadline];
       }
       result.sort(function (a, b) {
         var newADate = new Date(a.deadline)

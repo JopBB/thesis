@@ -17,9 +17,9 @@
         <h4>{{date.deadline}}</h4>-{{percentageDone(date)}}% of tasks done <h5><span :class="{invis:!date.last}">: Final deadline</span></h5> 
         <h6>
           <span v-if="date.highestUrgency===1"></span>
-          <span v-if="date.highestUrgency===2">There are urgent tasks due today!</span>
-          <span v-if="date.highestUrgency===3">There are very urgent tasks due today!</span>
-          <span v-if="date.highestUrgency===4">There are very urgent tasks due today!!!</span>
+          <span v-if="date.highestUrgency===2">!: There are urgent tasks due today!</span>
+          <span v-if="date.highestUrgency===3">!!: There are very urgent tasks due today!</span>
+          <span v-if="date.highestUrgency===4">!!!: There are very urgent tasks due today!!!</span>
         </h6>
       </div>
       <div v-for="member in members" class="modal-content flexed">
@@ -48,30 +48,44 @@ import members from '~/src/members.js';
       $('.timeLineModal').modal();
     },
     computed:{
-      sortedTaskDates(){
-        var membersList = members.members;
-        var lookup = {};
-        var result = [];
-        for (var i = 0; i < membersList.length; i++){
-          var highestUrgency=0;
-          for (var j = 0; j < membersList[i].tasks.length;j++) {
-            var task = membersList[i].tasks[j];
-            var highestUrgency = membersList[i].tasks[j].version > highestUrgency ? membersList[i].tasks[j].version : highestUrgency;
-            var deadline = task.deadline;
-            if (!(deadline in lookup)) {
-              lookup[deadline] = 1;
-              result.push({"deadline":deadline, "last":false, "highestUrgency":highestUrgency});
+      
+    sortedTaskDates(){
+      var membersList = members.members;
+      var lookup = {};
+      var result = [];
+      var urgencies = {};
+
+      for (var i = 0; i < membersList.length; i++){
+        for (var j = 0; j < membersList[i].tasks.length;j++) {
+          var task = membersList[i].tasks[j];
+          
+          var deadline = task.deadline;
+          if(!(deadline in urgencies)){
+            urgencies[deadline] = task.version;
+          }else{
+            if(urgencies[deadline]<task.version){
+              urgencies[deadline] = task.version
             }
-          } 
-        }
-        result.sort(function (a, b) {
-          var newADate = new Date(a.deadline)
-          var newBDate = new Date(b.deadline)
-          return newADate-newBDate;
-        });
-        result[result.length-1].last=true;
-        return result;
+          }
+
+          if (!(deadline in lookup)) {
+            lookup[deadline] = 1;
+            result.push({"deadline":deadline, "last":false, "highestUrgency":0});
+          }
+        } 
       }
+      for(var i=0; i<result.length;i++){
+        var deadline=result[i].deadline;
+        result[i].highestUrgency=urgencies[deadline];
+      }
+      result.sort(function (a, b) {
+        var newADate = new Date(a.deadline)
+        var newBDate = new Date(b.deadline)
+        return newADate-newBDate;
+      });
+      result[result.length-1].last=true;
+      return result;
+    }
     },
     methods:{
       percentageDonePerMember(date, member){

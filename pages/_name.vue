@@ -35,14 +35,15 @@
 	.taskCheck button{
 		margin-top:-5px;
 	}
-	.taskDone{
-		background-color: hsl(126, 100%, 50%) !important;
-	}
+	
 	.taskNotDone{
 		background-color: #FFC5C5 !important;
 	}
 	.taskUploaded{
 		background-color: hsl(126, 100%, 90%) !important;
+	}
+	.taskDone{
+		background-color: hsl(126, 100%, 50%) !important;
 	}
 	.niceBlue{
 		background-color: #008BA2;
@@ -108,7 +109,7 @@
 		      </li>
 
 		      <h4 style="margin-top:30px;">Tasks</h4>
-		      <li v-if="!(hidePastTasks && task.isPastDeadline())" v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' }, { taskUploaded: task.uploaded && !task.reviewed()}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
+		      <li v-if="!(hidePastTasks && task.isPastDeadline())" v-for="task in memberTasks" v-bind:class="[{ taskDone: task.done() && task.review==='good' && findWithAttr(members, 'name', params.name)!==0 }, { taskUploaded: task.uploaded}, { taskNotDone : task.review==='bad' || task.isSlacked()}]" class="collection-item greyBackground">
 		      	<button @click="deleteTask(task)" class="btn-flat removeButton"><li class="material-icons redIcon">delete</li></button>
 		        <span class="title"><strong>{{task.deadline}} </strong></span>
 		         <br /><span style="width:600px; word-wrap:break-word; display:inline-block;"> {{task.label}}</span>
@@ -139,12 +140,12 @@
 			              <input class="file-path validate" type="text">
 			            </div>
 			          </div>
-			          <button v-bind:disabled="!task.canBeUploaded || task.isSlacked()" style="float:none;" @click="uploadFile(task)" class="btn niceBlue" type="submit" name="action">Submit
+			          <button v-bind:disabled="!task.canBeUploaded || task.isSlacked()" style="float:none;" @click="uploadFile(task)" class="btn niceBlue" type="submit" name="action">Upload
 			            <i class="material-icons right">send</i>
 			          </button>
 			      	</div>
 			      	<div v-if="findWithAttr(members, 'name', params.name)!==0 && task.uploaded" class="secondary-content taskCheck">
-			      		<a href="sample-1.jpg" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
+			      		<a href="evidence.docx" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
 			      	</div>
 			      	<div class="secondary-content taskCheck" v-if="task.version===3 && findWithAttr(members, 'name', params.name)!==0">
 		        		<button style="float:none;" @click="takeOver(task)" class="btn-small">take over</button>
@@ -210,7 +211,7 @@
 						confirmButtonText: 'Yes, give me this task!'
 					}).then((result) => {
 						if (result.value) {
-				    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label + ' taken over from ' +this.$route.params.name , false, task.minDaysNeeded, 4))
+				    		members.members[0].tasks.push(new Task(new Date(task.deadline), task.label + ' - taken over from ' +this.$route.params.name , false, task.minDaysNeeded, 4))
 					    	swal(
 					    		'OK!',
 					    		'This task has been assigned to you!',

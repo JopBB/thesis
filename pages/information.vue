@@ -27,7 +27,7 @@
     <navbar></navbar>
     <div class="container">
       <div>
-        <h3>Deadline: 4 June</h3>
+        <h3>Deadline: 4th of July</h3>
 
         <h3>Members:</h3>
         <p v-for="member in members">

@@ -37,12 +37,12 @@
             <label for="minDaysNeeded">Estimation of minimum days needed for task</label>
           </div>
 
-          <div class="col col-6">
+          <!-- <div class="col col-6">
             <label for="uploaded">
               <input type="checkbox" v-model="uploaded" id="uploaded">
               <span>uploaded for debugging</span>
             </label>
-          </div>
+          </div> -->
 
           <button class="btn" type="submit" @click="addTask()">Add Task
             <i class="material-icons right">send</i>

@@ -124,7 +124,7 @@
                   // this.createNewReviewTask(newTask)
                 }
                 if(oldTask.version===2){
-                  var newTask = new Task(newDeadline, oldTask.label + ' 2 times', false, oldTask.minDaysNeeded, 3)
+                  var newTask = new Task(newDeadline, oldTask.label + ' for 2 times', false, oldTask.minDaysNeeded, 3)
                   membersList[i].tasks.push(newTask)
                   // this.createNewReviewTask(newTask)
                 }
