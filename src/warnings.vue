@@ -41,7 +41,7 @@
       <div v-for="member in members" class="modal warnings" :id="member.name">
         <div class="modal-content">
           <h3 class="header">Warning</h3>
-            <p>{{member.name}} has not been completing their tasks a couple of times now. The next time this happens, the lecturer will be informed about this through email.</p>
+            <p>{{member.name}} has not been completing their tasks a couple of times now and they've received a warning through email. It might be a good idea to talk to {{member.name}}, in order to get their priorities straight.<br /> The next time {{member.name}} misses a deadline the lecturer will be informed about this through email.</p>
         </div>
         <div class="modal-footer">
           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK, good to know!</a>

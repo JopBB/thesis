@@ -1,15 +1,16 @@
-//PARTICIPANT IS HARD WORKER MEMBERS-FILE
+//PARTICIPANT IS FREE-RIDER MEMBERS-FILE
 
 import Task from '~/src/Task.js';
 import Person from '~/src/Person.js';
 import ReviewTask from '~/src/ReviewTask.js';
 export default{
-	participantIsSlacker:false,
+	participantIsSlacker:true,
 	members:[
-		new Person("Participant", [
+		new Person("Kevin", [
 			new Task(new Date('5 june 2018 21:00' ),"Write chapter 1", false, 2, 1),
 			new Task(new Date('12 june 2018 21:00' ),"Write chapter 2", false, 4, 1),
-			new Task(new Date('20 june 2018 21:00'),"Write chapter 3", false, 3, 1),
+			new Task(new Date('12 june 2018 21:00' ),"Write chapter 3", false, 4, 1),
+			new Task(new Date('24 june 2018 21:00'),"Finish the theory-part of the paper", false, 3, 1),
 			new Task(new Date('29 june 2018 21:00'),"Write conclusion and abstract for paper", false, 2, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 4, 1)
 			],[
@@ -30,16 +31,16 @@ export default{
 			new Task(new Date('26 june 2018 21:00'),"Finish up results and analysis", false, 2, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 2, 1)
 			],[
-			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by Participant")
+			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by Kevin")
 			]),
 		new Person("Tommy", [
 			new Task(new Date('5 june 2018 21:00'),"Write Related Work section 3 and 4", true, 2, 1),
-			new Task(new Date('12 june 2018 21:00'),"Write  Related Work section 7 and 8", false, 3, 1),
-			new Task(new Date('19 june 2018 21:00'),"Start writing results tables 1 and 2", false, 2, 1),
+			new Task(new Date('12 june 2018 21:00'),"Write  Related Work section 7 and 8", true, 3, 1),
+			new Task(new Date('19 june 2018 21:00'),"Start writing results tables 1 and 2", true, 2, 1),
 			new Task(new Date('26 june 2018 21:00'),"Finish up results and analysis", false, 2, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 2, 1)
 			],[
-			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by Participant")
+			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by Kevin")
 			])
 	]	
 }

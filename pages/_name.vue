@@ -36,11 +36,12 @@
 		margin-top:-5px;
 	}
 	
-	.taskNotDone{
-		background-color: #FFC5C5 !important;
-	}
+	
 	.taskUploaded{
 		background-color: hsl(126, 100%, 90%) !important;
+	}
+	.taskNotDone{
+		background-color: #FFC5C5 !important;
 	}
 	.taskDone{
 		background-color: hsl(126, 100%, 50%) !important;
@@ -145,7 +146,7 @@
 			          </button>
 			      	</div>
 			      	<div v-if="findWithAttr(members, 'name', params.name)!==0 && task.uploaded" class="secondary-content taskCheck">
-			      		<a href="evidence.docx" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
+			      		<a href="RelatedWork1and2.docx" download><i @click="task.switchCanBeReviewed()" class="material-icons blackIcon">file_download</i></a>
 			      	</div>
 			      	<div class="secondary-content taskCheck" v-if="task.version===3 && findWithAttr(members, 'name', params.name)!==0">
 		        		<button style="float:none;" @click="takeOver(task)" class="btn-small">take over</button>

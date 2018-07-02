@@ -6,7 +6,7 @@ import ReviewTask from '~/src/ReviewTask.js';
 export default{
 	participantIsSlacker:false,
 	members:[
-		new Person("Participant", [
+		new Person("TestPersoon", [
 			new Task(new Date('5 june 2018 21:00' ),"Write chapter 1", false, 2, 1),
 			new Task(new Date('12 june 2018 21:00' ),"Write chapter 2", false, 4, 1),
 			new Task(new Date('20 june 2018 21:00'),"Write chapter 3", false, 3, 1),
@@ -30,16 +30,16 @@ export default{
 			new Task(new Date('26 june 2018 21:00'),"Finish up results and analysis", false, 2, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 2, 1)
 			],[
-			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by Participant")
+			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by TestPersoon")
 			]),
 		new Person("Tommy", [
-			new Task(new Date('5 june 2018 21:00'),"Write Related Work section 3 and 4", true, 2, 1),
-			new Task(new Date('12 june 2018 21:00'),"Write  Related Work section 7 and 8", false, 3, 1),
-			new Task(new Date('19 june 2018 21:00'),"Start writing results tables 1 and 2", false, 2, 1),
+			new Task(new Date('5 june 2018 21:00'),"Write Methods section 1 and 2", true, 2, 1),
+			new Task(new Date('12 june 2018 21:00'),"Write  Methods section 3 and 4", false, 3, 1),
+			new Task(new Date('19 june 2018 21:00'),"Finish Methods", false, 2, 1),
 			new Task(new Date('26 june 2018 21:00'),"Finish up results and analysis", false, 2, 1),
 			new Task(new Date('4 july 2018 21:00'),"Finish the paper", false, 2, 1)
 			],[
-			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by Participant")
+			new ReviewTask(new Date('8 june 2018 21:00'), "Review \'Write code for login-form\' by TestPersoon")
 			])
 	]	
 }

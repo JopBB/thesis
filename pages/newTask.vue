@@ -34,7 +34,7 @@
 
           <div class="input-field col col-6 s6">
             <input v-model="minDaysNeeded" id="minDaysNeeded" type="number">
-            <label for="minDaysNeeded">Estimation of minimum days needed for task</label>
+            <label for="minDaysNeeded">Amount of days needed to complete (estimation)</label>
           </div>
 
           <!-- <div class="col col-6">
